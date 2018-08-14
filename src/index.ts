@@ -35,7 +35,7 @@ export default class ApiClient {
       /* istanbul ignore next */
       const { data } = await this.axios.get(url, {
         params,
-        headers: Object.assign(this.headers, headers),
+        headers: Object.assign({}, this.headers, headers),
       })
 
       return deserialize(data)

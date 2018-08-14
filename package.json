@@ -32,7 +32,7 @@
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.js && typedoc --out docs --target es6 --theme minimal --mode file src",
-    "start": "rollup -c rollup.config.ts -w",
+    "start": "rollup -c rollup.config.js -w",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
@@ -99,7 +99,9 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
+    "jsonapi-normalizer": "^2.0.1",
     "jsonapi-typescript": "^0.0.9",
+    "ts-json-api": "^0.9.3",
     "ts-util-is": "^1.1.3"
   }
 }

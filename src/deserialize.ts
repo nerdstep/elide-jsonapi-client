@@ -1,20 +1,24 @@
-import {
+/*import {
+  Document,
+  DocWithData,
+  DocWithMeta,
   PrimaryData,
   ResourceObject,
   RelationshipsObject,
-} from 'jsonapi-typescript'
+} from './types'*/
+import {
+  Relationship,
+  ResourceObject,
+  Response,
+  ResponseWithData,
+} from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
 
 interface NormalizedRelationship {
   [key: string]: object
 }
 
-function normalizeResource(resource: ResourceObject) {
-  const { id, type, attributes } = resource
-  const relationships = extractRelationships(resource)
-
-  return { id, type, ...attributes, ...relationships }
-}
+type DeserializedResult = object[] | object
 
 function extractRelationships(
   resource: ResourceObject,
@@ -26,28 +30,38 @@ function extractRelationships(
   const result: NormalizedRelationship = {}
 
   Object.keys(relationships).map(type => {
-    result[type] = relationships[type]
+    result[type] = relationships[type].data
   })
 
   return result
 }
 
-type result = object[] | object
+function normalizeResource(resource: ResourceObject) {
+  const { id, type, attributes } = resource
+  const relationships = extractRelationships(resource)
 
-export function deserialize(data: PrimaryData) {
-  let result: result
+  return { id, type, ...attributes, ...relationships }
+}
 
-  console.log(data)
+function normalizeCollection(resources: ResourceObject[]) {
+  const result: object[] = []
 
-  if (isArray(data)) {
-    result = []
-
-    data.forEach(el => {
-      const resource = normalizeResource(el)
-      console.log(resource)
-      result.push(resource)
-    })
-  }
+  resources.forEach((resource: ResourceObject) => {
+    const normalized = normalizeResource(resource)
+    result.push(normalized)
+  })
 
   return result
+}
+
+export function deserialize(response: Response) {
+  const { data } = response
+
+  if (isArray(data)) {
+    return normalizeCollection(data)
+  } else if (isPlainObject(data)) {
+    return normalizeResource(data)
+  }
+
+  throw new TypeError('Invalid JSON API response')
 }
