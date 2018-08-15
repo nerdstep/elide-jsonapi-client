@@ -1,17 +1,4 @@
-/*import {
-  Document,
-  DocWithData,
-  DocWithMeta,
-  PrimaryData,
-  ResourceObject,
-  RelationshipsObject,
-} from './types'*/
-import {
-  Relationship,
-  ResourceObject,
-  Response,
-  ResponseWithData,
-} from 'ts-json-api'
+import { ResourceObject, Response } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
 
 interface NormalizedRelationship {

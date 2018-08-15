@@ -9,8 +9,8 @@ afterEach(() => {
 })
 
 describe('ApiClient', () => {
-  describe('GET', () => {
-    it('get', async done => {
+  describe('fetch', () => {
+    it('should return custom headers', async done => {
       expect.assertions(1)
       const api = new ApiClient({ headers: { foo: true } })
 
@@ -25,7 +25,7 @@ describe('ApiClient', () => {
       })
 
       try {
-        await api.get('things', undefined, { bar: true })
+        await api.fetch('things', undefined, { bar: true })
         done()
       } catch (err) {
         done.fail(err)
