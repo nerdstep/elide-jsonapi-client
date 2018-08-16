@@ -1,22 +1,26 @@
 import { isArray, isPlainObject } from 'ts-util-is'
 
+interface Attributes {
+  [index: string]: string | number | boolean | object | undefined
+}
+
 interface Params {
-  fields?: string | object
-  filter?: string | object
+  fields?: string | Attributes
+  filter?: string | Attributes
   include?: string | string[]
   page?: number
   pageSize?: number
   sort?: string | string[]
 }
 
-interface Options {
+declare type Options = {
   prefix?: boolean
   size?: number
   totals?: boolean
   type?: string
 }
 
-interface PageParams {
+declare type PageParams = {
   limit?: number
   number?: number
   offset?: number
@@ -30,14 +34,14 @@ interface ParamsObject {
   include?: string
   page?: PageParams
   sort?: string
-  [k: string]: string | object | PageParams | undefined
+  [index: string]: string | object | PageParams | undefined
 }
 
-function serializeObject(obj: object, param?: string) {
+function serializeObject(obj: Attributes, param?: string) {
   let str = ''
 
   Object.keys(obj).forEach(key => {
-    const value = obj[key]
+    const value = <Attributes>obj[key]
 
     if (param) str += `&${param}`
 
@@ -62,7 +66,7 @@ function toQueryString(params: ParamsObject, prefix = false) {
   let str = ''
 
   Object.keys(params).forEach(key => {
-    const value = params[key]
+    const value = <Attributes>params[key]
 
     if (isPlainObject(value)) {
       str += serializeObject(value, key)

@@ -1,48 +1,112 @@
+import {
+  Attributes,
+  Relationship,
+  Request,
+  ResourceObject,
+  ResourceObjects,
+  ResourceObjectOrObjects,
+} from 'ts-json-api'
+import { isArray, isPlainObject } from 'ts-util-is'
+import { Attribute } from './types'
+
+export const ID_REQUIRED = 'Resource must have an `id` property'
+export const TYPE_REQUIRED = 'Resource must have a `type` property'
+export const MISSING_ID_OR_TYPE =
+  'Relationships require `id` and `type` properties'
+
+declare type Options = {
+  dateAttrs?: string[]
+  idRequired?: boolean
+  protectedAttrs?: string[]
+}
+
 /**
- * Serialize data into a JSON-API structure
+ * Serializes an object into a JSON-API structure
  *
- * @param {object} values - resource attributes
- * @param {object} state - store state
- * @returns {object}
+ * @param model Resource type
+ * @param obj Resource data
+ * @param method Request type
+ * @returns Serialized data
  */
-export function serialize(
-  values,
-  { dateFields = [], protectedFields = [], type },
-) {
-  const attributes = {}
-  const relationships = {}
+export function serialize(obj: Attributes, options: Options = {}): Request {
+  const { id, type } = obj
+  const { dateAttrs = [], idRequired, protectedAttrs = [] } = options
+  const data = <ResourceObject>{ type }
 
-  Object.keys(values).forEach(key => {
-    let value = values[key]
+  if (!isPlainObject(obj)) {
+    throw new TypeError(`Expected an object but received \`${typeof obj}\``)
+  } else if (idRequired && !id) {
+    throw new Error(ID_REQUIRED)
+  } else if (!type) {
+    throw new Error(TYPE_REQUIRED)
+  }
 
-    if (RELATIONSHIP_TYPES.indexOf(key) > -1 && Array.isArray(value)) {
-      relationships[key] = {
-        data: value.map(item => ({ id: item.id, type: item.type })),
+  // Ensure ID is a string
+  if (obj.id) {
+    data.id = obj.id.toString()
+  }
+
+  // Map attributes and relationships
+  Object.keys(obj).forEach(key => {
+    let value = <ResourceObjectOrObjects>obj[key]
+
+    // Single relationship
+    if (isPlainObject(value)) {
+      value = <ResourceObject>value
+
+      if (!value.id || !value.type) {
+        throw new Error(MISSING_ID_OR_TYPE)
       }
-    }
 
-    // Remove fields that are not allowed to be updated/inserted
-    if (protectedFields.indexOf(key) === -1 && typeof value !== 'undefined') {
-      // Convert dates to epoch time for Elide
-      if (dateFields.indexOf(key) > -1) {
+      /* istanbul ignore next */
+      if (!data.relationships) data.relationships = {}
+
+      data.relationships[value.type] = <Relationship>{
+        data: Object.assign({}, value),
+      }
+
+      // Multiple relationships
+    } else if (isArray(value)) {
+      value = <ResourceObjects>value
+
+      if (!data.relationships) data.relationships = {}
+
+      data.relationships[key] = {
+        data: value.map((el: ResourceObject) => {
+          if (!el.id || !el.type) {
+            throw new Error(MISSING_ID_OR_TYPE)
+          }
+          return {
+            id: el.id,
+            type: el.type,
+          }
+        }),
+      }
+
+      // Attribute
+    } else if (
+      value &&
+      key !== 'id' &&
+      key !== 'type' &&
+      // Do not return protected attributes
+      protectedAttrs.indexOf(key) < 0
+    ) {
+      let attrValue = <Attribute>value
+
+      if (!data.attributes) data.attributes = {}
+
+      // Convert date values into Unix epoch time for Elide
+      if (dateAttrs.indexOf(key) > -1) {
         const timestamp = Date.parse(value)
 
-        if (!isNaN(timestamp)) {
-          value = timestamp
+        if (!Number.isNaN(timestamp)) {
+          attrValue = timestamp
         }
       }
 
-      attributes[key] = value
+      data.attributes[key] = attrValue
     }
   })
 
-  const result = { attributes, relationships, type }
-
-  if (values.id) {
-    result.id = values.id
-  }
-
-  //console.log('serialize', { result })
-
-  return result
+  return { data }
 }

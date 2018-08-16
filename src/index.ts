@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
+import { Attributes } from 'ts-json-api'
 import { error } from './error'
 import { deserialize } from './deserialize'
+import { serialize } from './serialize'
 import { serializeParams } from './serializeParams'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
@@ -63,18 +65,21 @@ export default class ApiClient {
     }
   }
 
-  async create(url: string, data: object, headers = {}) {
+  async post(url: string, data: object, headers = {}) {
     try {
-      const response = await this.axios.post(
-        url,
-        data, // serialize(data)
-        { headers: this.getHeaders(headers) },
-      )
+      const response = await this.axios.post(url, data, {
+        headers: this.getHeaders(headers),
+      })
 
       return response.data
     } catch (err) {
       throw error(err)
     }
+  }
+
+  async create(type: string, data: Attributes, headers = {}) {
+    const response = await this.post(type, serialize(data))
+    return response
   }
 
   async update(url: string, data: object, headers = {}, jsonPatch?: boolean) {
