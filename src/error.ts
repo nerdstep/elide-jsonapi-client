@@ -5,15 +5,25 @@ interface ApiError extends AxiosError {
 }
 
 /**
- * Mutates an error and rethrows it
+ * Destructures an Axios response error
  *
- * @param err The Error
+ * @param err Request error response
  * @throws The mutated Error
  */
 export function error(err: ApiError) {
-  if (err.response) {
-    const e = err.response.data
-    if (e && e.errors) err.errors = e.errors
-  }
+  const {
+    response: {
+      data: { errors = [] } = {},
+      status = 500,
+      statusText = 'Error',
+    } = {},
+  } = err
+
+  Object.assign(err, {
+    errors,
+    status,
+    statusText,
+  })
+
   throw err
 }

@@ -36,7 +36,7 @@ describe('serializeParams', () => {
   })
 
   it('serializes include param', () => {
-    expect.assertions(2)
+    expect.assertions(3)
     expect(
       serializeParams({
         include: ['foo', 'bar'],
@@ -47,6 +47,11 @@ describe('serializeParams', () => {
         include: 'foo,bar',
       }),
     ).toBe(encodeURI('include=foo,bar'))
+    expect(
+      serializeParams({
+        include: null,
+      }),
+    ).toBe('')
   })
 
   it('serializes include param', () => {

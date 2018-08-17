@@ -1,40 +1,74 @@
 import { ResourceObject, Response } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
+import { Attribute } from './types'
 
-interface NormalizedRelationship {
-  [key: string]: object
+export const BAD_RESPONSE = 'Received bad JSON-API response'
+
+interface NormalizedRelationsip {
+  id: string
+  type: string
+  [index: string]: Attribute
 }
 
-type DeserializedResult = object[] | object
+interface NormalizedRelationships {
+  [index: string]: object | object[]
+}
 
 function extractRelationships(
   resource: ResourceObject,
-): NormalizedRelationship | undefined {
+): NormalizedRelationships | undefined {
   const { relationships } = resource
 
   if (!relationships) return undefined
 
-  const result: NormalizedRelationship = {}
+  const result: NormalizedRelationships = {}
 
   Object.keys(relationships).map(type => {
-    result[type] = relationships[type].data
+    result[type] = <NormalizedRelationsip>relationships[type].data
   })
 
   return result
 }
 
-function normalizeResource(resource: ResourceObject) {
+function linkRelationships(
+  type: string,
+  relationships: NormalizedRelationships,
+  included: ResourceObject[],
+) {
+  const filtered = included.filter(item => item.type === type)
+
+  /*if (!relationships[type]) relationships[type] = <ResourceObject[]>[]
+
+  filtered.forEach(resource => {
+    
+    relationships[type].push(resource)
+  })*/
+
+  return relationships
+}
+
+function normalizeResource(
+  resource: ResourceObject,
+  included: ResourceObject[] = [],
+) {
   const { id, type, attributes } = resource
-  const relationships = extractRelationships(resource)
+  let relationships = extractRelationships(resource)
+
+  if (isPlainObject(relationships)) {
+    relationships = linkRelationships(type, relationships, included)
+  }
 
   return { id, type, ...attributes, ...relationships }
 }
 
-function normalizeCollection(resources: ResourceObject[]) {
+function normalizeCollection(
+  resources: ResourceObject[],
+  included: ResourceObject[] = [],
+) {
   const result: object[] = []
 
   resources.forEach((resource: ResourceObject) => {
-    const normalized = normalizeResource(resource)
+    const normalized = normalizeResource(resource, included)
     result.push(normalized)
   })
 
@@ -42,13 +76,15 @@ function normalizeCollection(resources: ResourceObject[]) {
 }
 
 export function deserialize(response: Response) {
-  const { data } = response
+  if (!response) throw new Error(BAD_RESPONSE)
+
+  const { data, included } = response
 
   if (isArray(data)) {
-    return normalizeCollection(data)
+    return normalizeCollection(data, included)
   } else if (isPlainObject(data)) {
-    return normalizeResource(data)
+    return normalizeResource(data, included)
   }
 
-  throw new TypeError('Invalid JSON API response')
+  throw new Error(BAD_RESPONSE)
 }

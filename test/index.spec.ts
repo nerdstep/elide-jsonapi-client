@@ -1,10 +1,15 @@
 import ApiClient from '../src/index'
 
-const api = new ApiClient()
+const api = new ApiClient({ baseURL: 'http://localhost', timeout: 5000 })
 
-describe('ApiClient test', () => {
-  it('ApiClient is instantiable', () => {
+describe('ApiClient', () => {
+  it('is instantiable', () => {
     expect(new ApiClient()).toBeInstanceOf(ApiClient)
+  })
+
+  it('has default values', () => {
+    expect(api.axios.defaults.baseURL).toBe('http://localhost')
+    expect(api.axios.defaults.timeout).toBe(5000)
   })
 
   describe('getHeaders', () => {

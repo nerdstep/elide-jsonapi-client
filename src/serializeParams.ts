@@ -4,20 +4,20 @@ interface Attributes {
   [index: string]: string | number | boolean | object | undefined
 }
 
-interface Params {
+declare type Options = {
+  prefix?: boolean
+  size?: number
+  totals?: boolean
+  type?: string
+}
+
+declare type Params = {
   fields?: string | Attributes
   filter?: string | Attributes
   include?: string | string[]
   page?: number
   pageSize?: number
   sort?: string | string[]
-}
-
-declare type Options = {
-  prefix?: boolean
-  size?: number
-  totals?: boolean
-  type?: string
 }
 
 declare type PageParams = {
@@ -70,7 +70,7 @@ function toQueryString(params: ParamsObject, prefix = false) {
 
     if (isPlainObject(value)) {
       str += serializeObject(value, key)
-    } else if (value) {
+    } else {
       str += `&${key}=${value}`
     }
   })

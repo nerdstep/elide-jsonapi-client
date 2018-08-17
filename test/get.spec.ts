@@ -8,28 +8,26 @@ afterEach(() => {
   mock.reset()
 })
 
-describe('ApiClient', () => {
-  describe('fetch', () => {
-    it('should return custom headers', async done => {
-      expect.assertions(1)
-      const api = new ApiClient({ headers: { foo: true } })
+describe('get', () => {
+  it('should return custom headers', async done => {
+    expect.assertions(1)
+    const api = new ApiClient({ headers: { foo: true } })
 
-      mock.onGet('things').reply(config => {
-        expect(config.headers).toEqual({
-          Accept: 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json',
-          foo: true,
-          bar: true,
-        })
-        return [200, { data: [] }]
+    mock.onGet('things').reply(config => {
+      expect(config.headers).toEqual({
+        Accept: 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json',
+        foo: true,
+        bar: true,
       })
-
-      try {
-        await api.fetch('things', undefined, { bar: true })
-        done()
-      } catch (err) {
-        done.fail(err)
-      }
+      return [200, { data: [] }]
     })
+
+    try {
+      await api.get('things', undefined, { bar: true })
+      done()
+    } catch (err) {
+      done.fail(err)
+    }
   })
 })

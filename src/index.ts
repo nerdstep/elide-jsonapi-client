@@ -38,6 +38,7 @@ export default class ApiClient {
 
     this.axios = axios.create({
       baseURL,
+      /* istanbul ignore next */
       paramsSerializer: (o: object) => serializeParams(o, pagignation),
       timeout,
     })
@@ -51,9 +52,9 @@ export default class ApiClient {
     return Object.assign({}, this.headers, headers)
   }
 
-  async fetch(url: string, params = {}, headers = {}) {
+  async get(url: string, params = {}, headers = {}) {
     try {
-      /* istanbul ignore next */
+      // istanbul ignore next */
       const { data } = await this.axios.get(url, {
         params,
         headers: this.getHeaders(headers),
