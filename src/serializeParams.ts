@@ -1,28 +1,11 @@
 import { isArray, isPlainObject } from 'ts-util-is'
-import { Attributes, Params } from './types'
+import { Attributes, PageParams, Params, ParamsObject } from './types'
 
 declare type Options = {
   prefix?: boolean
   size?: number
   totals?: boolean
   type?: string
-}
-
-declare type PageParams = {
-  limit?: number
-  number?: number
-  offset?: number
-  size?: number
-  totals?: boolean
-}
-
-interface ParamsObject {
-  fields?: string | object
-  filter?: string | object
-  include?: string
-  page?: PageParams
-  sort?: string
-  [index: string]: string | object | PageParams | undefined
 }
 
 function serializeObject(obj: Attributes, param?: string) {

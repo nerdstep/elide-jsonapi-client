@@ -1,8 +1,4 @@
-import { AxiosError } from 'axios'
-
-interface ApiError extends AxiosError {
-  errors?: Array<object | string>
-}
+import { ApiError } from './types'
 
 /**
  * Destructures an Axios response error

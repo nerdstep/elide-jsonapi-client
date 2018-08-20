@@ -1,23 +1,12 @@
 import { ResourceObject, Response } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
-import { Attribute } from './types'
+import {
+  Relationship,
+  RelationshipWithData,
+  NormalizedRelationships,
+} from './types'
 
 export const BAD_RESPONSE = 'Received bad JSON API response'
-
-declare type Relationship = {
-  type: string
-  id: string
-}
-
-interface RelationshipWithData {
-  id: string
-  type: string
-  [index: string]: Attribute
-}
-
-interface NormalizedRelationships {
-  [index: string]: Relationship | Relationship[]
-}
 
 function extractRelationships(
   resource: ResourceObject,
