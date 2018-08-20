@@ -15,3 +15,6 @@ Add client function `removeAll`.
   },
 ]
 ```
+
+- Improve source comments
+- Add usage docs
