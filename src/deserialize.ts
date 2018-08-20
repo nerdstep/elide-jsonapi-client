@@ -2,16 +2,21 @@ import { ResourceObject, Response } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
 import { Attribute } from './types'
 
-export const BAD_RESPONSE = 'Received bad JSON-API response'
+export const BAD_RESPONSE = 'Received bad JSON API response'
 
-interface NormalizedRelationsip {
+declare type Relationship = {
+  type: string
+  id: string
+}
+
+interface RelationshipWithData {
   id: string
   type: string
   [index: string]: Attribute
 }
 
 interface NormalizedRelationships {
-  [index: string]: object | object[]
+  [index: string]: Relationship | Relationship[]
 }
 
 function extractRelationships(
@@ -24,25 +29,40 @@ function extractRelationships(
   const result: NormalizedRelationships = {}
 
   Object.keys(relationships).map(type => {
-    result[type] = <NormalizedRelationsip>relationships[type].data
+    result[type] = <Relationship>relationships[type].data
   })
 
   return result
 }
 
+function filterIncluded(
+  included: ResourceObject[],
+  { id, type }: Relationship,
+) {
+  const filtered = included.filter(item => item.id === id && item.type === type)
+  const obj = filtered[0] || { id, type }
+  return normalizeResource(obj)
+}
+
 function linkRelationships(
-  type: string,
   relationships: NormalizedRelationships,
   included: ResourceObject[],
 ) {
-  const filtered = included.filter(item => item.type === type)
+  Object.keys(relationships).forEach(key => {
+    const values = relationships[key]
 
-  /*if (!relationships[type]) relationships[type] = <ResourceObject[]>[]
+    if (isArray(values)) {
+      const result = <RelationshipWithData[]>[]
 
-  filtered.forEach(resource => {
-    
-    relationships[type].push(resource)
-  })*/
+      values.forEach(item => {
+        result.push(filterIncluded(included, item))
+      })
+
+      relationships[key] = result
+    } else {
+      relationships[key] = filterIncluded(included, values)
+    }
+  })
 
   return relationships
 }
@@ -54,8 +74,8 @@ function normalizeResource(
   const { id, type, attributes } = resource
   let relationships = extractRelationships(resource)
 
-  if (isPlainObject(relationships)) {
-    relationships = linkRelationships(type, relationships, included)
+  if (isPlainObject(relationships) && included.length > 0) {
+    relationships = linkRelationships(relationships, included)
   }
 
   return { id, type, ...attributes, ...relationships }
@@ -86,5 +106,5 @@ export function deserialize(response: Response) {
     return normalizeResource(data, included)
   }
 
-  throw new Error(BAD_RESPONSE)
+  return response
 }
