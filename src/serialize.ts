@@ -1,5 +1,4 @@
 import {
-  Attributes,
   Relationship,
   Request,
   ResourceObject,
@@ -7,7 +6,7 @@ import {
   ResourceObjectOrObjects,
 } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
-import { Attribute } from './types'
+import { Attribute, NormalizedResource } from './types'
 
 export const ID_REQUIRED = 'Resource must have an `id` property'
 export const TYPE_REQUIRED = 'Resource must have a `type` property'
@@ -21,14 +20,17 @@ declare type Options = {
 }
 
 /**
- * Serializes an object into a JSON-API structure
+ * Serializes an object into a JSON API structure
  *
  * @param model Resource type
  * @param obj Resource data
  * @param method Request type
  * @returns Serialized data
  */
-export function serialize(obj: Attributes, options: Options = {}): Request {
+export function serialize(
+  obj: NormalizedResource,
+  options: Options = {},
+): Request {
   const { id, type } = obj
   const { dateAttrs = [], idRequired, protectedAttrs = [] } = options
   const data = <ResourceObject>{ type }

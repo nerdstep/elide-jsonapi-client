@@ -1,23 +1,11 @@
 import { isArray, isPlainObject } from 'ts-util-is'
-
-interface Attributes {
-  [index: string]: string | number | boolean | object | undefined
-}
+import { Attributes, Params } from './types'
 
 declare type Options = {
   prefix?: boolean
   size?: number
   totals?: boolean
   type?: string
-}
-
-declare type Params = {
-  fields?: string | Attributes
-  filter?: string | Attributes
-  include?: string | string[]
-  page?: number
-  pageSize?: number
-  sort?: string | string[]
 }
 
 declare type PageParams = {
