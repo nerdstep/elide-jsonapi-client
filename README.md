@@ -21,7 +21,7 @@ There are already a number of client libraries for working with JSON API, howeve
 - Serializes normalized resources back to a JSON API structure
   - Dates are converted to Unix epoch time for Elide
   - Protected fields can be omitted from being sent to the API
-- Supports [JSON Patch Extension] for bulk writes and complex mutations(https://github.com/json-api/json-api/blob/9c7a03dbc37f80f6ca81b16d444c960e96dd7a57/extensions/jsonpatch/index.md)
+- Supports [JSON Patch Extension](https://github.com/json-api/json-api/blob/9c7a03dbc37f80f6ca81b16d444c960e96dd7a57/extensions/jsonpatch/index.md) for bulk writes and complex mutations
 - Parameter serialization
   - Fields, filter, include, sort
   - [Pagination](http://elide.io/pages/guide/10-jsonapi.html#pagination): `size` & `number` OR `offset` & `limit`
@@ -46,7 +46,7 @@ yarn install
 - `npm run build`: Generate bundles and typings, create docs
 - `npm run lint`: Lints code
 
-## To Do List
+## To Do
 
 See [TODO](./TODO.md)
 
@@ -56,9 +56,9 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 
 ## Credits
 
-Bootstrapped with [TypeScript library starter](https://github.com/alexjoverm/typescript-library-starter).
+Bootstrapped with [TypeScript library starter](https://github.com/alexjoverm/typescript-library-starter)
 
-Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu).
+Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu)
 
 ## License
 
