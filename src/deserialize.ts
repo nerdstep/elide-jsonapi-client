@@ -18,7 +18,7 @@ function extractRelationships(
   const result: NormalizedRelationships = {}
 
   Object.keys(relationships).map(type => {
-    result[type] = <Relationship>relationships[type].data
+    result[type] = relationships[type].data as Relationship
   })
 
   return result
@@ -41,7 +41,7 @@ function linkRelationships(
     const values = relationships[key]
 
     if (isArray(values)) {
-      const result = <RelationshipWithData[]>[]
+      const result = [] as RelationshipWithData[]
 
       values.forEach(item => {
         result.push(filterIncluded(included, item))

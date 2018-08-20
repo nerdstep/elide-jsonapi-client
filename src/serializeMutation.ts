@@ -21,14 +21,14 @@ export function serializeMutation(
       )
     }
 
-    const data = <MutationResource>{
+    const data = {
       op,
       path,
       value: {
         id: op === 'add' ? '__id__' : id,
         type,
       },
-    }
+    } as MutationResource
 
     if (Object.keys(attributes).length > 0) {
       data.value.attributes = { ...attributes }

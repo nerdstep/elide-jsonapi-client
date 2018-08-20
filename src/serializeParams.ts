@@ -11,7 +11,7 @@ function serializeObject(obj: Attributes, param?: string) {
   let str = ''
 
   Object.keys(obj).forEach(key => {
-    const value = <Attributes>obj[key]
+    const value = obj[key] as Attributes
 
     if (param) str += `&${param}`
 
@@ -36,7 +36,7 @@ function toQueryString(params: ParamsObject, prefix = false) {
   let str = ''
 
   Object.keys(params).forEach(key => {
-    const value = <Attributes>params[key]
+    const value = params[key] as Attributes
 
     if (isPlainObject(value)) {
       str += serializeObject(value, key)

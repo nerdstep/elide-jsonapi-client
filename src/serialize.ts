@@ -27,7 +27,7 @@ export function serialize(
 ): Request {
   const { id, type } = obj
   const { dateAttrs = [], idRequired, protectedAttrs = [] } = options
-  const data = <ResourceObject>{ type }
+  const data = { type } as ResourceObject
 
   if (!isPlainObject(obj)) {
     throw new TypeError(`Expected an object but received \`${typeof obj}\``)
@@ -44,11 +44,11 @@ export function serialize(
 
   // Map attributes and relationships
   Object.keys(obj).forEach(key => {
-    let value = <ResourceObjectOrObjects>obj[key]
+    let value = obj[key] as ResourceObjectOrObjects
 
     // Single relationship
     if (isPlainObject(value)) {
-      value = <ResourceObject>value
+      value = value as ResourceObject
 
       if (!value.id || !value.type) {
         throw new Error(MISSING_ID_OR_TYPE)
@@ -57,13 +57,13 @@ export function serialize(
       /* istanbul ignore next */
       if (!data.relationships) data.relationships = {}
 
-      data.relationships[value.type] = <Relationship>{
+      data.relationships[value.type] = {
         data: Object.assign({}, value),
-      }
+      } as Relationship
 
       // Multiple relationships
     } else if (isArray(value)) {
-      value = <ResourceObjects>value
+      value = value as ResourceObjects
 
       if (!data.relationships) data.relationships = {}
 
@@ -87,7 +87,7 @@ export function serialize(
       // Do not return protected attributes
       protectedAttrs.indexOf(key) < 0
     ) {
-      let attrValue = <Attribute>value
+      let attrValue = value as Attribute
 
       if (!data.attributes) data.attributes = {}
 
