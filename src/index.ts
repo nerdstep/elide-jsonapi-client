@@ -5,7 +5,12 @@ import { deserializeMutation } from './deserializeMutation'
 import { serialize } from './serialize'
 import { serializeMutation } from './serializeMutation'
 import { serializeParams } from './serializeParams'
-import { NormalizedResource, Operation, Params } from './types'
+import {
+  NormalizedResource,
+  Operation,
+  Params,
+  SerializeOptions,
+} from './types'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -15,11 +20,14 @@ const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
  */
 export default class ApiClient {
   axios: AxiosInstance
+  dateAttrs: string[]
   headers: object
   jsonPatchHeaders: object
+  protectedAttrs: string[]
 
   constructor({
     baseURL = '/',
+    dateAttrs = [],
     headers = {},
     timeout = 20000, // 20s
     pagignation = {
@@ -27,7 +35,11 @@ export default class ApiClient {
       totals: true,
       type: 'offset',
     },
+    protectedAttrs = [],
   } = {}) {
+    this.dateAttrs = dateAttrs
+    this.protectedAttrs = protectedAttrs
+
     this.headers = Object.assign({}, headers, {
       Accept: JSON_API_CONTENT_TYPE,
       'Content-Type': JSON_API_CONTENT_TYPE,
@@ -52,6 +64,12 @@ export default class ApiClient {
     }
 
     return Object.assign({}, this.headers, headers)
+  }
+
+  serialize(data: NormalizedResource, options?: SerializeOptions) {
+    const { dateAttrs, protectedAttrs } = this
+    const opts = Object.assign({}, { dateAttrs, protectedAttrs }, options)
+    return serialize(data, opts)
   }
 
   async get(url: string, params: Params = {}, headers?: object) {
@@ -84,7 +102,7 @@ export default class ApiClient {
   }
 
   async create(type: string, data: NormalizedResource, headers?: object) {
-    const response = await this.post(type, serialize(data), headers)
+    const response = await this.post(type, this.serialize(data), headers)
     return deserialize(response.data)
   }
 
@@ -108,7 +126,11 @@ export default class ApiClient {
 
   /* istanbul ignore next */
   async update(type: string, data: NormalizedResource, headers?: object) {
-    const response = await this.patch(type, serialize(data), headers)
+    const response = await this.patch(
+      type,
+      this.serialize(data, { idRequired: true }),
+      headers,
+    )
     return deserialize(response.data)
   }
 
