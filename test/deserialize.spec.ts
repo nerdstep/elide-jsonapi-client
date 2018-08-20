@@ -19,8 +19,8 @@ const responseIncludes = {
   author: {
     type: 'people',
     id: '9',
-    'first-name': 'Dan',
-    'last-name': 'Gebhardt',
+    firstname: 'Dan',
+    lastname: 'Gebhardt',
     twitter: 'dgeb',
   },
   comments: [
@@ -28,21 +28,13 @@ const responseIncludes = {
       type: 'comments',
       id: '5',
       body: 'First!',
-      relationships: {
-        author: {
-          data: { type: 'people', id: '2' },
-        },
-      },
+      author: { type: 'people', id: '2' },
     },
     {
       type: 'comments',
       id: '12',
       body: 'I like XML better',
-      relationships: {
-        author: {
-          data: { type: 'people', id: '9' },
-        },
-      },
+      author: { type: 'people', id: '9' },
     },
   ],
 }
@@ -63,6 +55,38 @@ describe('deserialize', () => {
     expect(deserialize(collectionIncludes)).toEqual([responseIncludes])
   })
 
+  it('deserializes a resource collection with included data', () => {
+    expect.assertions(1)
+    expect(
+      deserialize({
+        data: [
+          {
+            type: 'articles',
+            id: '1',
+            relationships: {
+              comments: {
+                data: [
+                  { type: 'comments', id: '5' },
+                  { type: 'comments', id: '12' },
+                ],
+              },
+            },
+          },
+        ],
+        included: [{ type: 'comments', id: '12' }],
+      }),
+    ).toEqual([
+      {
+        type: 'articles',
+        id: '1',
+        comments: [
+          { type: 'comments', id: '5' },
+          { type: 'comments', id: '12' },
+        ],
+      },
+    ])
+  })
+
   it('deserializes a resource without relationships', () => {
     expect.assertions(1)
     const obj = Object.assign({}, resource)
@@ -74,8 +98,12 @@ describe('deserialize', () => {
   })
 
   it('should throw if response is invalid', () => {
-    expect.assertions(2)
+    expect.assertions(1)
     expect(() => deserialize(undefined)).toThrow(BAD_RESPONSE)
-    expect(() => deserialize({ data: null })).toThrow(BAD_RESPONSE)
+  })
+
+  it('should return the original response', () => {
+    expect.assertions(1)
+    expect(deserialize({ data: null })).toEqual({ data: null })
   })
 })

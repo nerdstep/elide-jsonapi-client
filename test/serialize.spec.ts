@@ -13,6 +13,7 @@ describe('serialize', () => {
   it('should cast id to a string', () => {
     expect.assertions(1)
     expect(
+      // @ts-ignore
       serialize({
         id: 1,
         type: 'articles',
@@ -48,6 +49,7 @@ describe('serialize', () => {
   it('should throw if Type is missing', () => {
     expect.assertions(1)
     expect(() =>
+      // @ts-ignore
       serialize({
         id: '1',
       }),
@@ -138,7 +140,7 @@ describe('serialize', () => {
     expect(
       serialize(
         {
-          id: 1,
+          id: '1',
           type: 'articles',
           title: 'JSON API paints my bikeshed!',
           isFoobar: true,
