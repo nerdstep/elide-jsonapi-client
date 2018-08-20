@@ -71,6 +71,23 @@ export interface ParamsObject {
 }
 
 /**
+ * Options
+ */
+
+export declare type SerializeOptions = {
+  dateAttrs?: string[]
+  idRequired?: boolean
+  protectedAttrs?: string[]
+}
+
+export declare type SerializeParamsOptions = {
+  prefix?: boolean
+  size?: number
+  totals?: boolean
+  type?: string
+}
+
+/**
  * Mutations
  */
 

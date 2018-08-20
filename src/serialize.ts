@@ -6,18 +6,12 @@ import {
   ResourceObjectOrObjects,
 } from 'ts-json-api'
 import { isArray, isPlainObject } from 'ts-util-is'
-import { Attribute, NormalizedResource } from './types'
+import { Attribute, NormalizedResource, SerializeOptions } from './types'
 
 export const ID_REQUIRED = 'Resource must have an `id` property'
 export const TYPE_REQUIRED = 'Resource must have a `type` property'
 export const MISSING_ID_OR_TYPE =
   'Relationships require `id` and `type` properties'
-
-declare type Options = {
-  dateAttrs?: string[]
-  idRequired?: boolean
-  protectedAttrs?: string[]
-}
 
 /**
  * Serializes an object into a JSON API structure
@@ -29,7 +23,7 @@ declare type Options = {
  */
 export function serialize(
   obj: NormalizedResource,
-  options: Options = {},
+  options: SerializeOptions = {},
 ): Request {
   const { id, type } = obj
   const { dateAttrs = [], idRequired, protectedAttrs = [] } = options

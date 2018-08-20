@@ -1,12 +1,11 @@
 import { isArray, isPlainObject } from 'ts-util-is'
-import { Attributes, PageParams, Params, ParamsObject } from './types'
-
-declare type Options = {
-  prefix?: boolean
-  size?: number
-  totals?: boolean
-  type?: string
-}
+import {
+  Attributes,
+  PageParams,
+  Params,
+  ParamsObject,
+  SerializeParamsOptions,
+} from './types'
 
 function serializeObject(obj: Attributes, param?: string) {
   let str = ''
@@ -27,7 +26,7 @@ function serializeObject(obj: Attributes, param?: string) {
 }
 
 /**
- * Constructs a URL query string for JSON:API parameters
+ * Constructs a URL query string for JSON API parameters
  *
  * @param params Parameters to parse
  * @param prefix Prefix returned string with `?` (default `false`)
@@ -51,7 +50,10 @@ function toQueryString(params: ParamsObject, prefix = false) {
   return str.length > 0 ? (prefix ? `?${str}` : str) : ''
 }
 
-export function serializeParams(params: Params = {}, options: Options = {}) {
+export function serializeParams(
+  params: Params = {},
+  options: SerializeParamsOptions = {},
+) {
   const { prefix, size = 10, totals = false, type = undefined } = options
   const { fields, filter, include, page = 1, pageSize = size, sort } = params
   const obj: ParamsObject = {}
