@@ -1,9 +1,11 @@
 import axios, { AxiosInstance } from 'axios'
-import { Attributes } from 'ts-json-api'
 import { error } from './error'
 import { deserialize } from './deserialize'
+import { deserializeMutation } from './deserializeMutation'
 import { serialize } from './serialize'
+import { serializeMutation } from './serializeMutation'
 import { serializeParams } from './serializeParams'
+import { NormalizedResource, Operation, Params } from './types'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -17,7 +19,7 @@ export default class ApiClient {
   jsonPatchHeaders: object
 
   constructor({
-    baseURL = '',
+    baseURL = '/',
     headers = {},
     timeout = 20000, // 20s
     pagignation = {
@@ -38,13 +40,13 @@ export default class ApiClient {
 
     this.axios = axios.create({
       baseURL,
-      /* istanbul ignore next */
-      paramsSerializer: (o: object) => serializeParams(o, pagignation),
+      paramsSerializer: /* istanbul ignore next */ (o: object) =>
+        serializeParams(o, pagignation),
       timeout,
     })
   }
 
-  getHeaders(headers = {}, jsonPatch?: boolean) {
+  getHeaders(headers?: object, jsonPatch?: boolean) {
     if (jsonPatch) {
       return Object.assign({}, this.jsonPatchHeaders, headers)
     }
@@ -52,9 +54,8 @@ export default class ApiClient {
     return Object.assign({}, this.headers, headers)
   }
 
-  async get(url: string, params = {}, headers = {}) {
+  async get(url: string, params: Params = {}, headers?: object) {
     try {
-      // istanbul ignore next */
       const { data } = await this.axios.get(url, {
         params,
         headers: this.getHeaders(headers),
@@ -66,40 +67,70 @@ export default class ApiClient {
     }
   }
 
-  async post(url: string, data: object, headers = {}) {
+  // Alias
+  fetch = this.get
+
+  async post(url: string, data: object, headers?: object) {
     try {
       const response = await this.axios.post(url, data, {
         headers: this.getHeaders(headers),
       })
 
-      return response.data
+      return response
     } catch (err) {
+      /* istanbul ignore next */
       throw error(err)
     }
   }
 
-  async create(type: string, data: Attributes, headers = {}) {
-    const response = await this.post(type, serialize(data))
-    return response
+  async create(type: string, data: NormalizedResource, headers?: object) {
+    const response = await this.post(type, serialize(data), headers)
+    return deserialize(response.data)
   }
 
-  async update(url: string, data: object, headers = {}, jsonPatch?: boolean) {
+  async patch(
+    url: string,
+    data: object,
+    headers?: object,
+    jsonPatch?: boolean,
+  ) {
     try {
-      //const serialData = await serialise.apply(this, [ model, body, 'PATCH' ])
       const response = await this.axios.patch(url, data, {
         headers: this.getHeaders(headers, jsonPatch),
       })
 
-      return response.data
+      return response
     } catch (err) {
+      /* istanbul ignore next */
       throw error(err)
     }
   }
 
-  async remove(url: string, data: object, headers = {}) {
+  /* istanbul ignore next */
+  async update(type: string, data: NormalizedResource, headers?: object) {
+    const response = await this.patch(type, serialize(data), headers)
+    return deserialize(response.data)
+  }
+
+  async mutate(
+    url: string,
+    op: Operation,
+    path: string,
+    data: NormalizedResource[],
+    headers?: object,
+  ) {
+    const response = await this.patch(
+      url,
+      serializeMutation(op, path, data),
+      headers,
+      true,
+    )
+    return deserializeMutation(response.data)
+  }
+
+  async delete(url: string, data?: object, headers?: object) {
     try {
       const response = await this.axios.delete(url, {
-        //data: serialize.apply(this, [ model, { id }, 'DELETE' ]),
         data,
         headers: Object.assign(this.headers, headers),
       })
@@ -108,5 +139,10 @@ export default class ApiClient {
     } catch (err) {
       throw error(err)
     }
+  }
+
+  async remove(type: string, id: string, headers?: object) {
+    const response = await this.delete(`${type}/${id}`, undefined, headers)
+    return response
   }
 }
