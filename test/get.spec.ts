@@ -2,6 +2,8 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import ApiClient from '../src/index'
 
+const collection = require('../jsonapi-spec/collection.json')
+
 const mock = new MockAdapter(axios)
 const api = new ApiClient({ headers: { foo: true } })
 
@@ -56,6 +58,33 @@ describe('get', () => {
     } catch (err) {
       expect(err.status).toBe(404)
       done()
+    }
+  })
+
+  it('should deserialize data', async done => {
+    expect.assertions(1)
+    mock.onGet('/articles').reply(200, collection)
+
+    try {
+      const res = await api.get('articles')
+      expect(res).toEqual({
+        data: [
+          {
+            id: '1',
+            type: 'articles',
+            title: 'JSON API paints my bikeshed!',
+            author: { type: 'people', id: '9' },
+            comments: [
+              { type: 'comments', id: '5' },
+              { type: 'comments', id: '12' },
+            ],
+          },
+        ],
+        meta: { page: { limit: 10, totalRecords: 1 } },
+      })
+      done()
+    } catch (err) {
+      done.fail(err)
     }
   })
 })
