@@ -19,16 +19,20 @@ describe('post', () => {
       attributes: { title: 'Hello World' },
     }
     const res = {
-      id: '1',
-      type: 'articles',
-      attributes: { title: 'Hello World' },
+      data: {
+        id: '1',
+        type: 'articles',
+        attributes: { title: 'Hello World' },
+      },
     }
-    const resDeserialied = { id: '1', type: 'articles', title: 'Hello World' }
+    const resDeserialied = {
+      data: { id: '1', type: 'articles', title: 'Hello World' },
+    }
 
     mock.onPost('/articles').reply(config => {
       const { data } = JSON.parse(config.data)
       expect(data).toEqual(reqSerialized)
-      return [201, { data: res }]
+      return [201, res]
     })
 
     try {
