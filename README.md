@@ -26,6 +26,8 @@ There are already a number of client libraries for working with JSON API, howeve
   - Fields, filter, include, sort
   - [Pagination](http://elide.io/pages/guide/10-jsonapi.html#pagination): `size` & `number` OR `offset` & `limit`
 
+## [API Docs](https://nerdstep.github.io/elide-jsonapi-client)
+
 ## Usage
 
 **Coming Soon**
