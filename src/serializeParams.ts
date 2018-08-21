@@ -1,5 +1,5 @@
+import { Attributes } from './types/jsonapi'
 import {
-  Attributes,
   PageParams,
   Params,
   ParamsObject,

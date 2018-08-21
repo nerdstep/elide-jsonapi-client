@@ -2909,10 +2909,6 @@ qs@~6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-
 randomatic@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-3.0.0.tgz#d35490030eb4f7578de292ce6dfb04a91a128923"
@@ -3583,12 +3579,6 @@ ts-jest@^23.1.3:
     closest-file-data "^0.1.4"
     fs-extra "6.0.1"
     lodash "^4.17.10"
-
-ts-json-api@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/ts-json-api/-/ts-json-api-0.9.3.tgz#bd1e7cb27e194eadc1655bd81fd05cb4c9ee7558"
-  dependencies:
-    ramda "^0.25.0"
 
 ts-node@^7.0.1:
   version "7.0.1"

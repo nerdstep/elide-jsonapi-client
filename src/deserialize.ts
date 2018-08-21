@@ -1,4 +1,4 @@
-import { ResourceObject, Response } from 'ts-json-api'
+import { ResourceObject, Response } from './types/jsonapi'
 import {
   NormalizedRelationships,
   Relationship,

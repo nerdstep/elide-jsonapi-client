@@ -1,4 +1,4 @@
-import { ResourceObject } from 'ts-json-api'
+import { Attribute, Attributes, ResourceObject } from './jsonapi'
 import { AxiosError } from 'axios'
 
 /**
@@ -12,12 +12,6 @@ export interface ApiError extends AxiosError {
 /**
  * Resources
  */
-
-export declare type Attribute = string | number | boolean | object | undefined
-
-export interface Attributes {
-  [index: string]: Attribute
-}
 
 export interface NormalizedResource {
   id?: string

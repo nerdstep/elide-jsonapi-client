@@ -1,4 +1,4 @@
-import { Response } from 'ts-json-api'
+import { Response } from './types/jsonapi'
 import { deserialize } from './deserialize'
 
 /**
