@@ -1,9 +1,10 @@
 # Elide JSON API Client
 
-[![NPM](https://flat.badgen.net/npm/v/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
-[![NPM](https://flat.badgen.net/npm/dt/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
+[![npm](https://flat.badgen.net/npm/v/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
+[![npm](https://flat.badgen.net/npm/dt/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
 [![gzip size](https://flat.badgen.net/bundlephobia/minzip/elide-jsonapi-client)](https://bundlephobia.com/result?p=elide-jsonapi-client)
-[![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/elide-jsonapi-client)](https://codecov.io/gh/nerdstep/elide-jsonapi-client)
+[![code coverage](https://flat.badgen.net/coveralls/c/github/nerdstep/elide-jsonapi-client)](https://coveralls.io/github/nerdstep/elide-jsonapi-client)
+[![build status](https://flat.badgen.net/travis/nerdstep/elide-jsonapi-client)](https://travis-ci.org/nerdstep/elide-jsonapi-client)
 [![styled with prettier](https://flat.badgen.net/badge/styled%20with/prettier/pink)](https://github.com/prettier/prettier)
 [![license](https://flat.badgen.net/github/license/nerdstep/elide-jsonapi-client)](./LICENSE)
 
