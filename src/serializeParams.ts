@@ -1,4 +1,3 @@
-import { isArray, isPlainObject } from 'ts-util-is'
 import {
   Attributes,
   PageParams,
@@ -6,6 +5,7 @@ import {
   ParamsObject,
   SerializeParamsOptions,
 } from './types'
+import { isArray, isPlainObject } from './util'
 
 function serializeObject(obj: Attributes, param?: string) {
   let str = ''

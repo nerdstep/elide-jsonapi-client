@@ -2,11 +2,11 @@ import {
   Relationship,
   Request,
   ResourceObject,
-  ResourceObjects,
   ResourceObjectOrObjects,
+  ResourceObjects,
 } from 'ts-json-api'
-import { isArray, isPlainObject } from 'ts-util-is'
 import { Attribute, NormalizedResource, SerializeOptions } from './types'
+import { isArray, isPlainObject } from './util'
 
 export const ID_REQUIRED = 'Resource must have an `id` property'
 export const TYPE_REQUIRED = 'Resource must have a `type` property'

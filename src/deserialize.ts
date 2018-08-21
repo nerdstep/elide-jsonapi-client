@@ -1,10 +1,10 @@
 import { ResourceObject, Response } from 'ts-json-api'
-import { isArray, isPlainObject } from 'ts-util-is'
 import {
+  NormalizedRelationships,
   Relationship,
   RelationshipWithData,
-  NormalizedRelationships,
 } from './types'
+import { isArray, isPlainObject } from './util'
 
 export const BAD_RESPONSE = 'Received bad JSON API response'
 
