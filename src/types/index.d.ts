@@ -1,4 +1,4 @@
-import { Attribute, Attributes, ResourceObject } from './jsonapi'
+import { Attribute, Attributes, Meta, ResourceObject } from './jsonapi'
 import { AxiosError } from 'axios'
 
 /**
@@ -32,6 +32,11 @@ export interface RelationshipWithData {
 
 export interface NormalizedRelationships {
   [index: string]: Relationship | Relationship[]
+}
+
+export interface NormalizedResponse {
+  data: NormalizedResource | NormalizedResource[]
+  meta?: Meta
 }
 
 /**
@@ -79,16 +84,4 @@ export declare type SerializeParamsOptions = {
   size?: number
   totals?: boolean
   type?: string
-}
-
-/**
- * Mutations
- */
-
-export declare type Operation = 'add' | 'remove' | 'replace'
-
-export declare type MutationResource = {
-  op: Operation
-  path: string
-  value: ResourceObject
 }

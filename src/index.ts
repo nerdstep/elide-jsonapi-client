@@ -5,12 +5,8 @@ import { deserializeMutation } from './deserializeMutation'
 import { serialize } from './serialize'
 import { serializeMutation } from './serializeMutation'
 import { serializeParams } from './serializeParams'
-import {
-  NormalizedResource,
-  Operation,
-  Params,
-  SerializeOptions,
-} from './types'
+import { NormalizedResource, Params, SerializeOptions } from './types'
+import { OperationType } from './types/jsonpatch'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -136,7 +132,7 @@ export default class ApiClient {
 
   async mutate(
     url: string,
-    op: Operation,
+    op: OperationType,
     path: string,
     data: NormalizedResource[],
     headers?: object,

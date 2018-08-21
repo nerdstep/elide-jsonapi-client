@@ -1,4 +1,5 @@
-import { MutationResource, NormalizedResource, Operation } from './types'
+import { NormalizedResource } from './types'
+import { Operation, OperationType } from './types/jsonpatch'
 
 /**
  * Serializes normalized resources into a JSON API-PATCH structure
@@ -10,7 +11,7 @@ import { MutationResource, NormalizedResource, Operation } from './types'
  * @param resources Resources to serialize
  */
 export function serializeMutation(
-  op: Operation,
+  op: OperationType,
   path: string,
   resources: NormalizedResource[],
 ) {
@@ -28,7 +29,7 @@ export function serializeMutation(
         id: op === 'add' ? '__id__' : id,
         type,
       },
-    } as MutationResource
+    } as Operation
 
     if (Object.keys(attributes).length > 0) {
       data.value.attributes = { ...attributes }

@@ -12,7 +12,7 @@ export interface Attributes {
 
 /**
  * Describes a single Relationship type between a
- * Resource Object and one or more other Resource Objects.
+ * Resource Object and one or more other Resource Objects
  */
 export interface Relationship<
   D extends ResourceObjectOrObjects = ResourceObjectOrObjects
@@ -23,14 +23,14 @@ export interface Relationship<
 }
 
 /**
- * A Resource object's Relationships.
+ * A Resource object's Relationships
  */
 export interface Relationships {
   [index: string]: Relationship
 }
 
 /**
- * A Link.
+ * A Link
  */
 export interface LinkObject {
   href: string
@@ -38,21 +38,21 @@ export interface LinkObject {
 }
 
 /**
- * An index of Links.
+ * An index of Links
  */
 export interface Links {
   [index: string]: string | LinkObject
 }
 
 /**
- * An index of Meta data.
+ * An index of Meta data
  */
 export interface Meta {
   [index: string]: any
 }
 
 /**
- * A representation of a single resource.
+ * A representation of a single resource
  */
 export declare type ResourceObject = {
   type: string
@@ -63,12 +63,12 @@ export declare type ResourceObject = {
 }
 
 /**
- * An array of Resource Objects.
+ * An array of Resource Objects
  */
 export declare type ResourceObjects = ResourceObject[]
 
 /**
- * Either or a single Resource Object or an array of Resource Objects.
+ * Either or a single Resource Object or an array of Resource Objects
  */
 export declare type ResourceObjectOrObjects = ResourceObject | ResourceObjects
 
@@ -87,7 +87,7 @@ export declare type NewResourceObject = {
 }
 
 /**
- * An Error.
+ * An Error
  */
 export interface Error {
   id?: string
@@ -104,7 +104,7 @@ export interface Error {
 }
 
 /**
- * A Response for sure containing data.
+ * A Response for sure containing data
  */
 export interface ResponseWithData<
   D extends ResourceObjectOrObjects = ResourceObjectOrObjects
@@ -117,7 +117,7 @@ export interface ResponseWithData<
 }
 
 /**
- * A Response for sure containing Errors.
+ * A Response for sure containing Errors
  */
 export interface ResponseWithErrors<
   D extends ResourceObjectOrObjects = ResourceObjectOrObjects
@@ -130,7 +130,7 @@ export interface ResponseWithErrors<
 }
 
 /**
- * A Response for sure containing top-level Meta data.
+ * A Response for sure containing top-level Meta data
  */
 export interface ResponseWithMetaData<
   D extends ResourceObjectOrObjects = ResourceObjectOrObjects
@@ -143,7 +143,7 @@ export interface ResponseWithMetaData<
 }
 
 /**
- * A Response from a JSON API-compliant server.
+ * A Response from a JSON API-compliant server
  */
 export interface Response<
   D extends ResourceObjectOrObjects = ResourceObjectOrObjects
@@ -156,6 +156,6 @@ export interface Response<
 }
 
 /**
- * A Request to be sent to a JSON API-compliant server.
+ * A Request to be sent to a JSON API-compliant server
  */
 export interface Request extends Response {}
