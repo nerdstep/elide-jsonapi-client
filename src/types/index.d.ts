@@ -56,8 +56,8 @@ export interface NormalizedResponse {
  */
 
 export declare type Params = {
-  fields?: Attributes
-  filter?: Attributes
+  fields?: string | Attributes
+  filter?: string | Attributes
   include?: string | string[]
   page?: number
   pageSize?: number
@@ -73,8 +73,8 @@ export declare type PageParams = {
 }
 
 export interface ParamsObject {
-  fields?: Attributes
-  filter?: Attributes
+  fields?: string | Attributes
+  filter?: string | Attributes
   include?: string
   page?: PageParams
   sort?: string
