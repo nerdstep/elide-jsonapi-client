@@ -97,8 +97,8 @@ export default class ApiClient {
     }
   }
 
-  async create(type: string, data: NormalizedResource, headers?: object) {
-    const response = await this.post(type, this.serialize(data), headers)
+  async create(url: string, data: NormalizedResource, headers?: object) {
+    const response = await this.post(url, this.serialize(data), headers)
     return deserialize(response.data)
   }
 
@@ -121,9 +121,9 @@ export default class ApiClient {
   }
 
   /* istanbul ignore next */
-  async update(type: string, data: NormalizedResource, headers?: object) {
+  async update(url: string, data: NormalizedResource, headers?: object) {
     const response = await this.patch(
-      type,
+      url,
       this.serialize(data, { idRequired: true }),
       headers,
     )
