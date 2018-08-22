@@ -27,6 +27,10 @@ export interface NormalizedResource {
   [index: string]: Attribute
 }
 
+export declare type NormalizedResourceOrResources =
+  | NormalizedResource
+  | NormalizedResource[]
+
 export declare type Relationship = {
   id: string
   type: string
@@ -43,7 +47,7 @@ export interface NormalizedRelationships {
 }
 
 export interface NormalizedResponse {
-  data: NormalizedResource | NormalizedResource[]
+  data: NormalizedResourceOrResources
   meta?: Meta
 }
 
