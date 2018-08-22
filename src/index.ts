@@ -237,6 +237,7 @@ export default class ApiClient {
    * @param data The related resource or collection of related resources
    * @param headers Request headers
    */
+  /* istanbul ignore next // virtually the same as createRelationship */
   async removeRelationship(
     type: string,
     id: string,
