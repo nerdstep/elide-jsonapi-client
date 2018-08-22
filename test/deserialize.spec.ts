@@ -1,4 +1,4 @@
-import { BAD_RESPONSE, deserialize } from '../src/deserialize'
+import { deserialize } from '../src/deserialize'
 
 const resource = require('../jsonapi-spec/resource.json')
 const collection = require('../jsonapi-spec/collection.json')
@@ -102,9 +102,13 @@ describe('deserialize', () => {
     expect(deserialize(obj)).toEqual({ data: res })
   })
 
-  it('should throw if response is invalid', () => {
-    expect.assertions(1)
-    expect(() => deserialize(undefined)).toThrow(BAD_RESPONSE)
+  it('should return empty or falsey values', () => {
+    expect.assertions(3)
+    expect(deserialize(null)).toBe(null)
+    // @ts-ignore
+    expect(deserialize('')).toBe('')
+    // @ts-ignore
+    expect(deserialize()).toBe(undefined)
   })
 
   it('should return the original response', () => {

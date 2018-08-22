@@ -3,10 +3,15 @@ import { NormalizedResponse } from './types'
 import { isArray, isPlainObject } from './util'
 import { normalizeCollection, normalizeResource } from './normalize'
 
-export const BAD_RESPONSE = 'Received bad JSON API response'
-
+/**
+ * Deserializes a JSON API response into a normalized structure
+ *
+ * @param response A resource object or collection of object
+ * @returns A normalized resource object or collection of objects
+ */
 export function deserialize(response: Response) {
-  if (!response) throw new Error(BAD_RESPONSE)
+  // Unexpected falsey value or no-content response
+  if (!response) return response
 
   const { data, included, meta } = response
   const result = {} as NormalizedResponse
