@@ -1,12 +1,20 @@
-import { Attribute, Attributes, Meta, ResourceObject } from './jsonapi'
+import { Attribute, Attributes, Error, Meta, ResourceObject } from './jsonapi'
 import { AxiosError } from 'axios'
 
 /**
  * Errors
  */
 
+export declare type ElideError = {
+  error: string
+  message: string
+  path: string
+  status: number
+  timestamp: string
+}
+
 export interface ApiError extends AxiosError {
-  errors?: object[] | string[]
+  errors?: [Error] | string[]
 }
 
 /**
