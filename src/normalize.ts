@@ -1,10 +1,10 @@
-import { ResourceObject } from './types/jsonapi'
+import { ResourceObject } from './typings/jsonapi'
 import {
   NormalizedRelationships,
   NormalizedResource,
   Relationship,
   RelationshipWithData,
-} from './types'
+} from './typings'
 import { isArray, isPlainObject } from './util'
 
 function extractRelationships(

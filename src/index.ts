@@ -10,8 +10,8 @@ import {
   NormalizedResourceOrResources,
   Params,
   SerializeOptions,
-} from './types'
-import { OperationType } from './types/jsonpatch'
+} from './typings'
+import { OperationType } from './typings/jsonpatch'
 import { mapResources } from './mapResources'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'

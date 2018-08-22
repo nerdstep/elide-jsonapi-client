@@ -1,4 +1,4 @@
-import { Response } from './types/jsonpatch'
+import { Response } from './typings/jsonpatch'
 import { normalizeResource } from './normalize'
 import { isPlainObject } from './util'
 

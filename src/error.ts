@@ -1,4 +1,4 @@
-import { ApiError } from './types'
+import { ApiError } from './typings'
 
 /**
  * Destructures an Axios response error

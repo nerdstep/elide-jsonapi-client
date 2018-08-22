@@ -5,8 +5,8 @@ import {
   ResourceObject,
   ResourceObjectOrObjects,
   ResourceObjects,
-} from './types/jsonapi'
-import { NormalizedResource, SerializeOptions } from './types'
+} from './typings/jsonapi'
+import { NormalizedResource, SerializeOptions } from './typings'
 import { isArray, isPlainObject } from './util'
 
 export const ID_REQUIRED = 'Resource must have an `id` property'

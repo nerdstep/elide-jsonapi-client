@@ -1,5 +1,5 @@
-import { Response } from './types/jsonapi'
-import { NormalizedResponse } from './types'
+import { Response } from './typings/jsonapi'
+import { NormalizedResponse } from './typings'
 import { isArray, isPlainObject } from './util'
 import { normalizeCollection, normalizeResource } from './normalize'
 

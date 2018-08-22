@@ -1,10 +1,10 @@
-import { Attributes } from './types/jsonapi'
+import { Attributes } from './typings/jsonapi'
 import {
   PageParams,
   Params,
   ParamsObject,
   SerializeParamsOptions,
-} from './types'
+} from './typings'
 import { isArray, isPlainObject } from './util'
 
 function serializeObject(obj: Attributes, param?: string) {

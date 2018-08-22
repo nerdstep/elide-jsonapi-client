@@ -1,4 +1,4 @@
-import { NormalizedResource, NormalizedResourceOrResources } from './types'
+import { NormalizedResource, NormalizedResourceOrResources } from './typings'
 import { isArray, isPlainObject } from './util'
 
 /**
