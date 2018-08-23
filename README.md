@@ -4,6 +4,7 @@
 [![npm](https://flat.badgen.net/npm/dt/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
 [![gzip size](https://flat.badgen.net/bundlephobia/minzip/elide-jsonapi-client)](https://bundlephobia.com/result?p=elide-jsonapi-client)
 [![code coverage](https://flat.badgen.net/coveralls/c/github/nerdstep/elide-jsonapi-client)](https://coveralls.io/github/nerdstep/elide-jsonapi-client)
+[![maintainability](https://flat.badgen.net/codeclimate/maintainability/nerdstep/elide-jsonapi-client)](https://codeclimate.com/github/nerdstep/elide-jsonapi-client)
 [![build status](https://flat.badgen.net/travis/nerdstep/elide-jsonapi-client)](https://travis-ci.org/nerdstep/elide-jsonapi-client)
 [![styled with prettier](https://flat.badgen.net/badge/styled%20with/prettier/pink)](https://github.com/prettier/prettier)
 [![license](https://flat.badgen.net/github/license/nerdstep/elide-jsonapi-client)](./LICENSE)
@@ -16,6 +17,7 @@ There are already a number of client libraries for working with JSON API, howeve
 
 - Built with Typescript!
 - Built on top of [axios](https://github.com/axios/axios) as a peer dependency
+- Supports `Promises` and `async/await`
 - JSON API response normalization
   - Flatter structure
   - Merges included relationship data
@@ -29,9 +31,37 @@ There are already a number of client libraries for working with JSON API, howeve
 
 ## [API Docs](https://nerdstep.github.io/elide-jsonapi-client)
 
-## Usage
+## Basic Usage
 
-**Coming Soon**
+```js
+import ApiClient from 'elide-jsonapi-client'
+
+// Initialize a new client
+const api = new ApiClient({
+  baseURL: 'http://localhost/api',
+})
+
+// Fetch a resource collection
+const res = await api.fetch('articles')
+
+// Create a resource
+api.create('articles', {
+  type: 'articles',
+  title: 'Hello World',
+})
+
+// Update a resource
+api.update('articles/1', {
+  id: '1',
+  type: 'articles',
+  title: 'Hello World!!!',
+})
+
+// Remove a resource
+api.remove('articles', 1)
+```
+
+### [Documentation](./wiki)
 
 ## Development
 
