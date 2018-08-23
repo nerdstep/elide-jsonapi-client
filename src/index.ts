@@ -190,7 +190,7 @@ export default class ApiClient {
     }
   }
 
-  async remove(type: string, id: string, headers?: object) {
+  async remove(type: string, id: string | number, headers?: object) {
     const response = await this.delete(`${type}/${id}`, undefined, headers)
     return response
   }
