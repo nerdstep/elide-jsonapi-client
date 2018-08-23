@@ -1,9 +1,9 @@
 import { ResourceObject } from './typings/jsonapi'
 import {
+  NormalizedRelationship,
   NormalizedRelationships,
   NormalizedResource,
-  Relationship,
-  RelationshipWithData,
+  RelationshipRef,
 } from './typings'
 import { isArray, isPlainObject } from './util'
 
@@ -17,7 +17,7 @@ function extractRelationships(
   const result: NormalizedRelationships = {}
 
   Object.keys(relationships).map(type => {
-    result[type] = relationships[type].data as Relationship
+    result[type] = relationships[type].data as RelationshipRef
   })
 
   return result
@@ -25,7 +25,7 @@ function extractRelationships(
 
 function filterIncluded(
   included: ResourceObject[],
-  { id, type }: Relationship,
+  { id, type }: NormalizedResource,
 ) {
   const filtered = included.filter(item => item.id === id && item.type === type)
   const obj = filtered[0] || { id, type }
@@ -40,7 +40,7 @@ function linkRelationships(
     const values = relationships[key]
 
     if (isArray(values)) {
-      const result = [] as RelationshipWithData[]
+      const result = [] as NormalizedRelationship[]
 
       values.forEach(item => {
         result.push(filterIncluded(included, item))

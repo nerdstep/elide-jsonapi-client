@@ -31,24 +31,26 @@ export declare type NormalizedResourceOrResources =
   | NormalizedResource
   | NormalizedResource[]
 
-export declare type Relationship = {
+export interface NormalizedResponse {
+  data: NormalizedResourceOrResources
+  meta?: Meta
+}
+
+/**
+ * Relationships
+ */
+
+export declare type RelationshipRef = {
   id: string
   type: string
 }
 
-export interface RelationshipWithData {
-  id: string
-  type: string
+export interface NormalizedRelationship extends RelationshipRef {
   [index: string]: Attribute
 }
 
 export interface NormalizedRelationships {
-  [index: string]: Relationship | Relationship[]
-}
-
-export interface NormalizedResponse {
-  data: NormalizedResourceOrResources
-  meta?: Meta
+  [index: string]: NormalizedRelationship | NormalizedRelationship[]
 }
 
 /**
