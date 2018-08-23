@@ -8,6 +8,15 @@ export function isArray(value: any): value is any[] {
 }
 
 /**
+ * Determines if a reference is defined
+ *
+ * @param value Reference to check
+ */
+export function isDefined(value: any): boolean {
+  return typeof value !== 'undefined'
+}
+
+/**
  * Determines if a reference is an 'Object'
  *
  * @param value Reference to check
