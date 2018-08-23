@@ -5,8 +5,15 @@ import {
   ParamsObject,
   SerializeParamsOptions,
 } from './typings'
-import { isArray, isPlainObject } from './util'
+import { isArray, isDefined, isPlainObject } from './util'
 
+/**
+ * Recursively stringifies nested objects
+ *
+ * @param obj An object
+ * @param param The current query parameter
+ * @returns A URI component
+ */
 function serializeObject(obj: Attributes, param?: string) {
   let str = ''
 
@@ -17,7 +24,7 @@ function serializeObject(obj: Attributes, param?: string) {
 
     if (isPlainObject(value)) {
       str += `[${key}]${serializeObject(value)}`
-    } else {
+    } else if (isDefined(value)) {
       str += `[${key}]=${value}`
     }
   })
@@ -30,7 +37,7 @@ function serializeObject(obj: Attributes, param?: string) {
  *
  * @param params Parameters to parse
  * @param prefix Prefix returned string with `?` (default `false`)
- * @returns URL query string
+ * @returns A URL query string
  */
 function toQueryString(params: ParamsObject, prefix = false) {
   let str = ''
@@ -40,7 +47,7 @@ function toQueryString(params: ParamsObject, prefix = false) {
 
     if (isPlainObject(value)) {
       str += serializeObject(value, key)
-    } else {
+    } else if (isDefined(value)) {
       str += `&${key}=${value}`
     }
   })
@@ -50,26 +57,24 @@ function toQueryString(params: ParamsObject, prefix = false) {
   return str.length > 0 ? (prefix ? `?${str}` : str) : ''
 }
 
+/**
+ * Serializes a parameter object into a URL query string
+ *
+ * @param params Query parameters
+ * @param options Serialization options
+ * @returns A URL query string
+ */
 export function serializeParams(
   params: Params = {},
   options: SerializeParamsOptions = {},
 ) {
   const { prefix, size = 10, totals = false, type = undefined } = options
   const { fields, filter, include, page = 1, pageSize = size, sort } = params
-  const obj: ParamsObject = {}
+  const obj: ParamsObject = { fields, filter }
   const pp: PageParams = {}
 
-  if (fields) obj.fields = fields
-
-  if (filter) obj.filter = filter
-
-  if (include) {
-    obj.include = isArray(include) ? include.join(',') : include
-  }
-
-  if (sort) {
-    obj.sort = isArray(sort) ? sort.join(',') : sort
-  }
+  obj.include = isArray(include) ? include.join(',') : include
+  obj.sort = isArray(sort) ? sort.join(',') : sort
 
   if (totals) pp.totals = totals
 

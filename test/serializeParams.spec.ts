@@ -20,6 +20,7 @@ describe('serializeParams', () => {
           b: 'foobar',
           c: {
             d: 'baz',
+            e: undefined,
           },
         },
       }),
@@ -49,7 +50,7 @@ describe('serializeParams', () => {
     ).toBe(encodeURI('include=foo,bar'))
     expect(
       serializeParams({
-        include: null,
+        include: undefined,
       }),
     ).toBe('')
   })
