@@ -6,6 +6,12 @@ export const TYPE_REQUIRED = 'Resource must have a `type` property'
 export const ID_TYPE_REQUIRED =
   'Relationship resource must have `id` and `type` properties'
 
+/**
+ * Throws if the provided resource doesn't have expected properties
+ *
+ * @param obj
+ * @param idRequired
+ */
 export function validateResource(
   obj: NormalizedResource,
   idRequired?: boolean,
@@ -19,6 +25,11 @@ export function validateResource(
   }
 }
 
+/**
+ * Throws if the provided relationship object doesn't have expected properties
+ *
+ * @param obj
+ */
 export function validateRelationship(obj: RelationshipRef) {
   if (!obj.id || !obj.type) {
     throw new Error(ID_TYPE_REQUIRED)

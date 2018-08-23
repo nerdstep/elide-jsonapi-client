@@ -7,9 +7,13 @@ import {
 } from './typings'
 import { isArray, isPlainObject } from './util'
 
-function extractRelationships(
-  resource: ResourceObject,
-): NormalizedRelationships | undefined {
+/**
+ * Hoists reltionship objects from the `data` property to a root level property
+ *
+ * @param resource A resource object
+ * @returns A flattened relationship object
+ */
+function extractRelationships(resource: ResourceObject) {
   const { relationships } = resource
 
   if (!relationships) return undefined
@@ -23,15 +27,30 @@ function extractRelationships(
   return result
 }
 
+/**
+ * Returns included relationship resources
+ * that match the provided relationship reference object
+ *
+ * @param included A collection of resource objects
+ * @param obj A relationship object
+ * @returns A normalized resource object
+ */
 function filterIncluded(
   included: ResourceObject[],
-  { id, type }: NormalizedResource,
+  { id, type }: RelationshipRef,
 ) {
   const filtered = included.filter(item => item.id === id && item.type === type)
   const obj = filtered[0] || { id, type }
   return normalizeResource(obj)
 }
 
+/**
+ * Merges included relationship data with resource object relationships
+ *
+ * @param relationships A normalized object of relationship resources
+ * @param included The included relationship resources
+ * @returns A merged relationship object
+ */
 function linkRelationships(
   relationships: NormalizedRelationships,
   included: ResourceObject[],
@@ -55,6 +74,13 @@ function linkRelationships(
   return relationships
 }
 
+/**
+ * Normalizes a resource by hoisting the attributes and linking relationships
+ *
+ * @param resource A resource object
+ * @param included Included relationship resources
+ * @returns A normalized resource object
+ */
 export function normalizeResource(
   resource: ResourceObject,
   included: ResourceObject[] = [],
@@ -69,6 +95,13 @@ export function normalizeResource(
   return { id, type, ...attributes, ...relationships }
 }
 
+/**
+ * Normalizes a collection of resource objects
+ *
+ * @param resources The collection of resources
+ * @param included Included relationship resources
+ * @returns A collection of normalized resource objects
+ */
 export function normalizeCollection(
   resources: ResourceObject[],
   included: ResourceObject[] = [],
