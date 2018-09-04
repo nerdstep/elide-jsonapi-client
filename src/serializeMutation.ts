@@ -1,5 +1,5 @@
-import { NormalizedResource } from './types'
-import { Operation, OperationType } from './types/jsonpatch'
+import { NormalizedResource } from './typings'
+import { Operation, OperationType } from './typings/jsonpatch'
 
 /**
  * Serializes normalized resources into a JSON API-PATCH structure

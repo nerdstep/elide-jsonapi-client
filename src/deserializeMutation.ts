@@ -1,11 +1,12 @@
-import { Response } from './types/jsonpatch'
+import { Response } from './typings/jsonpatch'
 import { normalizeResource } from './normalize'
 import { isPlainObject } from './util'
 
 /**
  * Deserializes a response from a JSON API PATCH request
  *
- * @param response
+ * @param response A collection or response objects
+ * @returns A collection of normalized values
  */
 export function deserializeMutation(response: Response) {
   const result = response.map(item => {

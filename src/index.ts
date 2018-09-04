@@ -5,8 +5,14 @@ import { deserializeMutation } from './deserializeMutation'
 import { serialize } from './serialize'
 import { serializeMutation } from './serializeMutation'
 import { serializeParams } from './serializeParams'
-import { NormalizedResource, Params, SerializeOptions } from './types'
-import { OperationType } from './types/jsonpatch'
+import {
+  NormalizedResource,
+  NormalizedResourceOrResources,
+  Params,
+  SerializeOptions,
+} from './typings'
+import { OperationType } from './typings/jsonpatch'
+import { mapResources } from './mapResources'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -68,6 +74,10 @@ export default class ApiClient {
     return serialize(data, opts)
   }
 
+  /**
+   * FETCH
+   */
+
   async get(url: string, params: Params = {}, headers?: object) {
     try {
       const { data } = await this.axios.get(url, {
@@ -84,6 +94,10 @@ export default class ApiClient {
   // Alias
   fetch = this.get
 
+  /**
+   * CREATE
+   */
+
   async post(url: string, data: object, headers?: object) {
     try {
       const response = await this.axios.post(url, data, {
@@ -97,11 +111,14 @@ export default class ApiClient {
     }
   }
 
-  async create(type: string, data: NormalizedResource, headers?: object) {
-    data.type = type // Ensure type is defined
-    const response = await this.post(type, this.serialize(data), headers)
+  async create(url: string, data: NormalizedResource, headers?: object) {
+    const response = await this.post(url, this.serialize(data), headers)
     return deserialize(response.data)
   }
+
+  /**
+   * UPDATE
+   */
 
   async patch(
     url: string,
@@ -122,15 +139,24 @@ export default class ApiClient {
   }
 
   /* istanbul ignore next */
-  async update(type: string, data: NormalizedResource, headers?: object) {
+  async update(url: string, data: NormalizedResource, headers?: object) {
     const response = await this.patch(
-      type,
+      url,
       this.serialize(data, { idRequired: true }),
       headers,
     )
     return deserialize(response.data)
   }
 
+  /**
+   * JSON Patch Extension mutation
+   *
+   * @param url
+   * @param op
+   * @param path
+   * @param data
+   * @param headers
+   */
   async mutate(
     url: string,
     op: OperationType,
@@ -147,6 +173,10 @@ export default class ApiClient {
     return deserializeMutation(response.data)
   }
 
+  /**
+   * DELETE
+   */
+
   async delete(url: string, data?: object, headers?: object) {
     try {
       const response = await this.axios.delete(url, {
@@ -160,8 +190,69 @@ export default class ApiClient {
     }
   }
 
-  async remove(type: string, id: string, headers?: object) {
+  async remove(type: string, id: string | number, headers?: object) {
     const response = await this.delete(`${type}/${id}`, undefined, headers)
+    return response
+  }
+
+  /**
+   * RELATIONSHIPS
+   */
+
+  /**
+   * Creates a relationship between a parent resource
+   * and the provided resource(s)
+   *
+   * @param type The parent resource Type
+   * @param id  The parent resource ID
+   * @param relationshipType The relationship resource Type
+   * @param data The related resource or collection of related resources
+   * @param headers Request headers
+   */
+  async createRelationship(
+    type: string,
+    id: string,
+    relationshipType: string,
+    data: NormalizedResourceOrResources,
+    headers?: object,
+  ) {
+    const resources = mapResources(data)
+
+    const response = await this.post(
+      `${type}/${id}/relationships/${relationshipType}`,
+      resources,
+      headers,
+    )
+
+    return response
+  }
+
+  /**
+   * Removes a relationship between a parent resource
+   * and the provided resource(s)
+   *
+   * @param type The parent resource Type
+   * @param id  The parent resource ID
+   * @param relationshipType The relationship resource Type
+   * @param data The related resource or collection of related resources
+   * @param headers Request headers
+   */
+  /* istanbul ignore next // virtually the same as createRelationship */
+  async removeRelationship(
+    type: string,
+    id: string,
+    relationshipType: string,
+    data: NormalizedResourceOrResources,
+    headers?: object,
+  ) {
+    const resources = mapResources(data)
+
+    const response = await this.delete(
+      `${type}/${id}/relationships/${relationshipType}`,
+      resources,
+      headers,
+    )
+
     return response
   }
 }

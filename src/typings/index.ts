@@ -1,12 +1,20 @@
-import { Attribute, Attributes, Meta, ResourceObject } from './jsonapi'
+import { Attribute, Attributes, Error, Meta, ResourceObject } from './jsonapi'
 import { AxiosError } from 'axios'
 
 /**
  * Errors
  */
 
+export declare type ElideError = {
+  error: string
+  message: string
+  path: string
+  status: number
+  timestamp: string
+}
+
 export interface ApiError extends AxiosError {
-  errors?: object[] | string[]
+  errors?: [Error] | string[]
 }
 
 /**
@@ -19,24 +27,30 @@ export interface NormalizedResource {
   [index: string]: Attribute
 }
 
-export declare type Relationship = {
+export declare type NormalizedResourceOrResources =
+  | NormalizedResource
+  | NormalizedResource[]
+
+export interface NormalizedResponse {
+  data: NormalizedResourceOrResources
+  meta?: Meta
+}
+
+/**
+ * Relationships
+ */
+
+export declare type RelationshipRef = {
   id: string
   type: string
 }
 
-export interface RelationshipWithData {
-  id: string
-  type: string
+export interface NormalizedRelationship extends RelationshipRef {
   [index: string]: Attribute
 }
 
 export interface NormalizedRelationships {
-  [index: string]: Relationship | Relationship[]
-}
-
-export interface NormalizedResponse {
-  data: NormalizedResource | NormalizedResource[]
-  meta?: Meta
+  [index: string]: NormalizedRelationship | NormalizedRelationship[]
 }
 
 /**
@@ -44,8 +58,8 @@ export interface NormalizedResponse {
  */
 
 export declare type Params = {
-  fields?: Attributes
-  filter?: Attributes
+  fields?: string | Attributes
+  filter?: string | Attributes
   include?: string | string[]
   page?: number
   pageSize?: number
@@ -61,8 +75,8 @@ export declare type PageParams = {
 }
 
 export interface ParamsObject {
-  fields?: Attributes
-  filter?: Attributes
+  fields?: string | Attributes
+  filter?: string | Attributes
   include?: string
   page?: PageParams
   sort?: string

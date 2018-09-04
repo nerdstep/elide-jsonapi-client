@@ -3,39 +3,31 @@ import {
   Relationship,
   Request,
   ResourceObject,
-  ResourceObjectOrObjects,
-  ResourceObjects,
-} from './types/jsonapi'
-import { NormalizedResource, SerializeOptions } from './types'
-import { isArray, isPlainObject } from './util'
-
-export const ID_REQUIRED = 'Resource must have an `id` property'
-export const TYPE_REQUIRED = 'Resource must have a `type` property'
-export const MISSING_ID_OR_TYPE =
-  'Relationships require `id` and `type` properties'
+} from './typings/jsonapi'
+import {
+  NormalizedRelationship,
+  NormalizedResource,
+  SerializeOptions,
+} from './typings'
+import { isArray, isPlainObject, parseDate } from './util'
+import { validateRelationship, validateResource } from './validation'
 
 /**
  * Serializes an object into a JSON API structure
  *
- * @param obj Resource data
+ * @param obj A normalized resource object
  * @param options Serialization options
- * @returns Serialized data
+ * @returns A JSON API compliant resource object
  */
 export function serialize(
   obj: NormalizedResource,
   options: SerializeOptions = {},
 ): Request {
-  const { id, type } = obj
+  const { type } = obj
   const { dateAttrs = [], idRequired, protectedAttrs = [] } = options
   const data = { type } as ResourceObject
 
-  if (!isPlainObject(obj)) {
-    throw new TypeError(`Expected an object but received \`${typeof obj}\``)
-  } else if (idRequired && !id) {
-    throw new Error(ID_REQUIRED)
-  } else if (!type) {
-    throw new Error(TYPE_REQUIRED)
-  }
+  validateResource(obj, idRequired)
 
   // Ensure ID is a string
   if (obj.id) {
@@ -44,34 +36,33 @@ export function serialize(
 
   // Map attributes and relationships
   Object.keys(obj).forEach(key => {
-    let value = obj[key] as ResourceObjectOrObjects
+    let value = obj[key] as NormalizedRelationship | NormalizedRelationship[]
 
     // Single relationship
     if (isPlainObject(value)) {
-      value = value as ResourceObject
+      value = value as NormalizedRelationship
 
-      if (!value.id || !value.type) {
-        throw new Error(MISSING_ID_OR_TYPE)
-      }
+      validateRelationship(value)
 
       /* istanbul ignore next */
       if (!data.relationships) data.relationships = {}
 
       data.relationships[value.type] = {
-        data: Object.assign({}, value),
+        data: {
+          id: value.id,
+          type: value.type,
+        },
       } as Relationship
 
       // Multiple relationships
     } else if (isArray(value)) {
-      value = value as ResourceObjects
+      value = value as NormalizedRelationship[]
 
       if (!data.relationships) data.relationships = {}
 
       data.relationships[key] = {
-        data: value.map((el: ResourceObject) => {
-          if (!el.id || !el.type) {
-            throw new Error(MISSING_ID_OR_TYPE)
-          }
+        data: value.map((el: NormalizedRelationship) => {
+          validateRelationship(el)
           return {
             id: el.id,
             type: el.type,
@@ -93,11 +84,7 @@ export function serialize(
 
       // Convert date values into Unix epoch time for Elide
       if (dateAttrs.indexOf(key) > -1) {
-        const timestamp = Date.parse(value)
-
-        if (!Number.isNaN(timestamp)) {
-          attrValue = timestamp
-        }
+        attrValue = parseDate(value)
       }
 
       data.attributes[key] = attrValue

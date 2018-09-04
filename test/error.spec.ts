@@ -1,5 +1,10 @@
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+import ApiClient from '../src/index'
 import { error } from '../src/error'
 
+const mock = new MockAdapter(axios)
+const api = new ApiClient()
 const ERROR_MSG = 'ERROR'
 
 const getError = ({
@@ -17,6 +22,10 @@ const getError = ({
     headers: {},
     config: {},
   },
+})
+
+afterEach(() => {
+  mock.reset()
 })
 
 describe('error', () => {
@@ -49,5 +58,28 @@ describe('error', () => {
       // @ts-ignore
       error(new Error(ERROR_MSG))
     }).toThrow(ERROR_MSG)
+  })
+
+  it('should handle Elide server errors', async done => {
+    expect.assertions(3)
+
+    const err = {
+      error: 'Internal Server Error',
+      message: 'Something really bad happened',
+      path: '/articles',
+      status: 500,
+      timestamp: new Date().toISOString(),
+    }
+
+    mock.onGet('/articles').reply(500, err)
+
+    try {
+      await api.get('articles')
+    } catch (e) {
+      expect(e.status).toBe(err.status)
+      expect(e.statusText).toBe(err.error)
+      expect(e.errors).toEqual([err.message])
+      done()
+    }
   })
 })
