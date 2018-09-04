@@ -17,9 +17,8 @@ export const MISSING_ID_OR_TYPE =
 /**
  * Serializes an object into a JSON API structure
  *
- * @param model Resource type
  * @param obj Resource data
- * @param method Request type
+ * @param options Serialization options
  * @returns Serialized data
  */
 export function serialize(

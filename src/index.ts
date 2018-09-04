@@ -98,6 +98,7 @@ export default class ApiClient {
   }
 
   async create(type: string, data: NormalizedResource, headers?: object) {
+    data.type = type // Ensure type is defined
     const response = await this.post(type, this.serialize(data), headers)
     return deserialize(response.data)
   }
