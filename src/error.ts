@@ -1,4 +1,4 @@
-import { ApiError } from './typings'
+import { ApiError } from './typings';
 
 /**
  * Destructures an Axios response error
@@ -18,7 +18,7 @@ export function error(err: ApiError) {
   // Handle Elide server errors
   if (errors.length === 0 && (error || message)) {
     statusText = error
-    errors.push(message)
+    if (message) errors.push(message)
   }
 
   Object.assign(err, {
