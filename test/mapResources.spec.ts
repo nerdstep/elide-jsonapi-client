@@ -13,6 +13,7 @@ describe('mapResources', () => {
   })
 
   it('returns an empty array', () => {
+    // @ts-ignore
     expect(mapResources(null)).toEqual([])
   })
 })

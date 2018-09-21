@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
-import { error } from './error'
 import { deserialize } from './deserialize'
 import { deserializeMutation } from './deserializeMutation'
+import { error } from './error'
+import { mapResources } from './mapResources'
 import { serialize } from './serialize'
 import { serializeMutation } from './serializeMutation'
 import { serializeParams } from './serializeParams'
@@ -12,7 +13,6 @@ import {
   SerializeOptions,
 } from './typings'
 import { OperationType } from './typings/jsonpatch'
-import { mapResources } from './mapResources'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -29,7 +29,7 @@ export default class ApiClient {
 
   constructor({
     baseURL = '/',
-    dateAttrs = [],
+    dateAttrs = <string[]>[],
     headers = {},
     timeout = 20000, // 20s
     pagignation = {
@@ -37,7 +37,7 @@ export default class ApiClient {
       totals: true,
       type: 'offset',
     },
-    protectedAttrs = [],
+    protectedAttrs = <string[]>[],
   } = {}) {
     this.dateAttrs = dateAttrs
     this.protectedAttrs = protectedAttrs

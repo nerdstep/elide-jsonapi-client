@@ -1,9 +1,5 @@
-import {
-  ID_REQUIRED,
-  TYPE_REQUIRED,
-  MISSING_ID_OR_TYPE,
-  serialize,
-} from '../src/serialize'
+import { serialize } from '../src/serialize'
+import { ID_REQUIRED, ID_TYPE_REQUIRED, TYPE_REQUIRED } from '../src/validation'
 
 const dateObj = new Date()
 const dateStr = dateObj.toISOString()
@@ -64,14 +60,14 @@ describe('serialize', () => {
         type: 'articles',
         author: { id: '9' },
       }),
-    ).toThrow(MISSING_ID_OR_TYPE)
+    ).toThrow(ID_TYPE_REQUIRED)
     expect(() =>
       serialize({
         id: '1',
         type: 'articles',
         comments: [{ type: 'comments' }],
       }),
-    ).toThrow(MISSING_ID_OR_TYPE)
+    ).toThrow(ID_TYPE_REQUIRED)
   })
 
   it('should convert date to epoch time', () => {

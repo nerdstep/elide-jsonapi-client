@@ -104,6 +104,7 @@ describe('deserialize', () => {
 
   it('should return empty or falsey values', () => {
     expect.assertions(3)
+    // @ts-ignore
     expect(deserialize(null)).toBe(null)
     // @ts-ignore
     expect(deserialize('')).toBe('')
@@ -113,6 +114,7 @@ describe('deserialize', () => {
 
   it('should return the original response', () => {
     expect.assertions(1)
+    // @ts-ignore
     expect(deserialize({ data: null })).toEqual({ data: null })
   })
 })

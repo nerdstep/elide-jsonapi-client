@@ -1,6 +1,6 @@
-import { Response } from './typings/jsonpatch'
 import { normalizeResource } from './normalize'
-import { isPlainObject } from './util'
+import { Response } from './typings/jsonpatch'
+import { isArray, isPlainObject } from './util'
 
 /**
  * Deserializes a response from a JSON API PATCH request
@@ -10,15 +10,15 @@ import { isPlainObject } from './util'
  */
 export function deserializeMutation(response: Response) {
   const result = response.map(item => {
-    const { data } = item
+    const { data, errors } = item
 
     if (isPlainObject(data)) {
       return normalizeResource(data)
-    } else if (typeof data !== 'undefined') {
-      return data
+    } else if (isArray(errors)) {
+      return { errors }
     }
 
-    return item
+    return null
   })
 
   // Return truthy values

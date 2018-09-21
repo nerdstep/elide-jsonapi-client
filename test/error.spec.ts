@@ -1,7 +1,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import ApiClient from '../src/index'
 import { error } from '../src/error'
+import ApiClient from '../src/index'
 
 const mock = new MockAdapter(axios)
 const api = new ApiClient()
@@ -79,6 +79,27 @@ describe('error', () => {
       expect(e.status).toBe(err.status)
       expect(e.statusText).toBe(err.error)
       expect(e.errors).toEqual([err.message])
+      done()
+    }
+  })
+
+  it('should handle Elide server errors', async done => {
+    expect.assertions(1)
+
+    const err = {
+      error: 'Internal Server Error',
+      message: undefined,
+      path: '/articles',
+      status: 500,
+      timestamp: new Date().toISOString(),
+    }
+
+    mock.onGet('/articles').reply(500, err)
+
+    try {
+      await api.get('articles')
+    } catch (e) {
+      expect(e.errors).toEqual([])
       done()
     }
   })
