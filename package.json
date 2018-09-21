@@ -1,6 +1,6 @@
 {
   "name": "elide-jsonapi-client",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "JSON-API client for Elide based APIs",
   "keywords": [
     "json",
@@ -47,10 +47,10 @@
     ]
   },
   "jest": {
+    "preset": "ts-jest",
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -58,7 +58,7 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/src/types/",
+      "/src/typings/",
       "/test/"
     ],
     "coverageThreshold": {
@@ -77,30 +77,29 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.7.1",
-    "@types/ramda": "^0.25.36",
+    "@types/jest": "^23.3.2",
+    "@types/node": "^10.10.1",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
     "coveralls": "^3.0.0",
     "env-cmd": "^8.0.2",
-    "jest": "^23.5.0",
-    "lint-staged": "^7.2.2",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
     "minicat": "^1.0.0",
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "rimraf": "^2.6.1",
-    "rollup": "^0.64.1",
-    "rollup-plugin-commonjs": "^9.1.5",
-    "rollup-plugin-json": "^3.0.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup": "^0.66.2",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.16.1",
-    "ts-jest": "^23.1.3",
+    "rollup-plugin-typescript2": "^0.17.0",
+    "ts-jest": "^23.10.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.15.0",
-    "tslint-config-standard": "^7.0.0",
+    "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.12.0",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.3"
   }
 }
