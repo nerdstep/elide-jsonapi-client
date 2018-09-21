@@ -101,7 +101,7 @@ describe('patch', () => {
         },
       ]
 
-      const res = <any[]>[]
+      const res = [] as any[]
 
       mock.onPatch('/articles').reply(config => {
         const data = JSON.parse(config.data)

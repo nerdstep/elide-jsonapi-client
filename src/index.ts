@@ -29,7 +29,7 @@ export default class ApiClient {
 
   constructor({
     baseURL = '/',
-    dateAttrs = <string[]>[],
+    dateAttrs = [] as string[],
     headers = {},
     timeout = 20000, // 20s
     pagignation = {
@@ -37,7 +37,7 @@ export default class ApiClient {
       totals: true,
       type: 'offset',
     },
-    protectedAttrs = <string[]>[],
+    protectedAttrs = [] as string[],
   } = {}) {
     this.dateAttrs = dateAttrs
     this.protectedAttrs = protectedAttrs
