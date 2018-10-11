@@ -27,7 +27,7 @@ export declare type Operations = Operation[]
  */
 export interface ResponseObject {
   data?: ResourceObject
-  errors?: [Error]
+  errors?: Error[]
 }
 
 /**

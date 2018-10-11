@@ -1,5 +1,5 @@
-import { serialize } from '../src/serialize'
-import { ID_REQUIRED, ID_TYPE_REQUIRED, TYPE_REQUIRED } from '../src/validation'
+import { serialize } from '../src/serialize';
+import { ID_REQUIRED, ID_TYPE_REQUIRED, TYPE_REQUIRED } from '../src/validation';
 
 const dateObj = new Date()
 const dateStr = dateObj.toISOString()
@@ -9,8 +9,8 @@ describe('serialize', () => {
   it('should cast id to a string', () => {
     expect.assertions(1)
     expect(
-      // @ts-ignore
       serialize({
+        // @ts-ignore
         id: 1,
         type: 'articles',
       }),
