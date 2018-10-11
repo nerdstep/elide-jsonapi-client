@@ -1,15 +1,15 @@
 import {
+  NormalizedRelationship,
+  NormalizedResource,
+  SerializeOptions,
+} from './typings'
+import {
   Attribute,
   Relationship,
   Request,
   ResourceObject,
 } from './typings/jsonapi'
-import {
-  NormalizedRelationship,
-  NormalizedResource,
-  SerializeOptions,
-} from './typings'
-import { isArray, isPlainObject, parseDate } from './util'
+import { isArray, isDefined, isPlainObject, parseDate } from './util'
 import { validateRelationship, validateResource } from './validation'
 
 /**
@@ -72,7 +72,7 @@ export function serialize(
 
       // Attribute
     } else if (
-      value &&
+      isDefined(value) &&
       key !== 'id' &&
       key !== 'type' &&
       // Do not return protected attributes
