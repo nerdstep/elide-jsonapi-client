@@ -1,5 +1,5 @@
-import { Attribute, Attributes, Error, Meta, ResourceObject } from './jsonapi'
 import { AxiosError } from 'axios'
+import { Attribute, Attributes, Error, Meta } from './jsonapi'
 
 /**
  * Errors
