@@ -4,7 +4,7 @@
     "minified": 9882,
     "gzipped": 3287
   },
-  "dist/elide-jsonapi-client.es5.js": {
+  "dist/elide-jsonapi-client.es.js": {
     "bundled": 32446,
     "minified": 10996,
     "gzipped": 3438,
