@@ -13,6 +13,7 @@ import {
   SerializeOptions,
 } from './typings'
 import { OperationType } from './typings/jsonpatch'
+import { concatUnique } from './util'
 
 const JSON_API_CONTENT_TYPE = 'application/vnd.api+json'
 const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
@@ -77,15 +78,38 @@ export default class ApiClient {
   }
 
   /**
+   * Merges provided options with the class instance options
+   *
+   * @param {Object} options
+   * @property {string[]} dateAttrs
+   * @property {bool} idRequired
+   * @property {string[]} protectedAttrs
+   */
+  getOptions(
+    {
+      dateAttrs = [],
+      idRequired = false,
+      protectedAttrs = [],
+    } = {} as SerializeOptions,
+  ) {
+    const uniqDateAttrs = concatUnique(this.dateAttrs, dateAttrs)
+    const uniqProtectedAttrs = concatUnique(this.protectedAttrs, protectedAttrs)
+
+    return {
+      dateAttrs: uniqDateAttrs,
+      idRequired,
+      protectedAttrs: uniqProtectedAttrs,
+    }
+  }
+
+  /**
    * Serializes a normalized resource object into a JSON API structure
    *
    * @param data
    * @param options
    */
   serialize(data: NormalizedResource, options?: SerializeOptions) {
-    const { dateAttrs, protectedAttrs } = this
-    const opts = Object.assign({}, { dateAttrs, protectedAttrs }, options)
-    return serialize(data, opts)
+    return serialize(data, this.getOptions(options))
   }
 
   /******************************************************************
@@ -148,10 +172,21 @@ export default class ApiClient {
    *
    * @param url
    * @param data
+   * @param options
    * @param headers
    */
-  async create(url: string, data: NormalizedResource, headers?: object) {
-    const response = await this.post(url, this.serialize(data), headers)
+  async create(
+    url: string,
+    data: NormalizedResource,
+    options?: SerializeOptions,
+    headers?: object,
+  ) {
+    const response = await this.post(
+      url,
+      this.serialize(data, options),
+      headers,
+    )
+
     return deserialize(response.data)
   }
 
@@ -194,15 +229,18 @@ export default class ApiClient {
    *
    * @param url
    * @param data
+   * @param options
    * @param headers
    */
-  /* istanbul ignore next */
-  async update(url: string, data: NormalizedResource, headers?: object) {
-    const response = await this.patch(
-      url,
-      this.serialize(data, { idRequired: true }),
-      headers,
-    )
+  async update(
+    url: string,
+    data: NormalizedResource,
+    options?: SerializeOptions,
+    headers?: object,
+  ) {
+    const opts = Object.assign({}, options, { idRequired: true })
+    const response = await this.patch(url, this.serialize(data, opts), headers)
+
     return deserialize(response.data)
   }
 
@@ -228,6 +266,7 @@ export default class ApiClient {
       headers,
       true,
     )
+
     return deserializeMutation(response.data)
   }
 

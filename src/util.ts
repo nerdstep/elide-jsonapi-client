@@ -50,3 +50,12 @@ export function parseDate(value: string) {
   const ts = Date.parse(value)
   return Number.isNaN(ts) ? value : ts
 }
+
+/**
+ * Merge arrays while preserving only unique items
+ *
+ * @example concatUnique([1,2], [2,3])
+ * @param {...any[]} arr array of primitives
+ * @returns {any[]} array of unique items, e.g. [1,2,3]
+ */
+export const concatUnique = (...arr: any[]) => [...new Set([].concat(...arr))]
