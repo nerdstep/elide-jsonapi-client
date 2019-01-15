@@ -31,6 +31,22 @@ describe('ApiClient', () => {
     })
   })
 
+  describe('getOptions', () => {
+    it('should return merged options', () => {
+      expect(
+        api.getOptions({
+          dateAttrs: ['newDate'],
+          idRequired: true,
+          protectedAttrs: ['hello'],
+        }),
+      ).toEqual({
+        dateAttrs: ['date', 'newDate'],
+        idRequired: true,
+        protectedAttrs: ['foobar', 'hello'],
+      })
+    })
+  })
+
   describe('serialize', () => {
     it('should omit protected attributes', () => {
       expect(api.serialize({ id: '1', type: 'foo', foobar: true })).toEqual({
