@@ -19,6 +19,8 @@ const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
 
 /**
  * @class ApiClient
+ *
+ * Client for Elide based JSON APIs
  */
 export default class ApiClient {
   axios: AxiosInstance
@@ -60,6 +62,12 @@ export default class ApiClient {
     })
   }
 
+  /**
+   * Merges provided header properties with the class instance properties
+   *
+   * @param headers
+   * @param jsonPatch
+   */
   getHeaders(headers?: object, jsonPatch?: boolean) {
     if (jsonPatch) {
       return Object.assign({}, this.jsonPatchHeaders, headers)
@@ -68,16 +76,29 @@ export default class ApiClient {
     return Object.assign({}, this.headers, headers)
   }
 
+  /**
+   * Serializes a normalized resource object into a JSON API structure
+   *
+   * @param data
+   * @param options
+   */
   serialize(data: NormalizedResource, options?: SerializeOptions) {
     const { dateAttrs, protectedAttrs } = this
     const opts = Object.assign({}, { dateAttrs, protectedAttrs }, options)
     return serialize(data, opts)
   }
 
-  /**
+  /******************************************************************
    * FETCH
-   */
+   *****************************************************************/
 
+  /**
+   * Fetch an API resource
+   *
+   * @param url
+   * @param params
+   * @param headers
+   */
   async get(url: string, params: Params = {}, headers?: object) {
     try {
       const { data } = await this.axios.get(url, {
@@ -94,10 +115,19 @@ export default class ApiClient {
   // Alias
   fetch = this.get
 
-  /**
+  /******************************************************************
    * CREATE
-   */
+   *****************************************************************/
 
+  /**
+   * Create a new resource
+   *
+   * Does not serialize the request data or deserialize the response
+   *
+   * @param url
+   * @param data
+   * @param headers
+   */
   async post(url: string, data: object, headers?: object) {
     try {
       const response = await this.axios.post(url, data, {
@@ -111,15 +141,34 @@ export default class ApiClient {
     }
   }
 
+  /**
+   * Create a new resource
+   *
+   * Serializes the request data and deserializes the response
+   *
+   * @param url
+   * @param data
+   * @param headers
+   */
   async create(url: string, data: NormalizedResource, headers?: object) {
     const response = await this.post(url, this.serialize(data), headers)
     return deserialize(response.data)
   }
 
-  /**
+  /******************************************************************
    * UPDATE
-   */
+   *****************************************************************/
 
+  /**
+   * Update a resource
+   *
+   * Does not serialize the request data or deserialize the response
+   *
+   * @param url
+   * @param data
+   * @param headers
+   * @param jsonPatch
+   */
   async patch(
     url: string,
     data: object,
@@ -138,6 +187,15 @@ export default class ApiClient {
     }
   }
 
+  /**
+   * Update a resource
+   *
+   * Serializes the request data and deserializes the response
+   *
+   * @param url
+   * @param data
+   * @param headers
+   */
   /* istanbul ignore next */
   async update(url: string, data: NormalizedResource, headers?: object) {
     const response = await this.patch(
@@ -173,10 +231,19 @@ export default class ApiClient {
     return deserializeMutation(response.data)
   }
 
-  /**
+  /******************************************************************
    * DELETE
-   */
+   *****************************************************************/
 
+  /**
+   * Delete a resource
+   *
+   * Can accept a resource object or collection of resources to delete
+   *
+   * @param url
+   * @param data
+   * @param headers
+   */
   async delete(url: string, data?: object, headers?: object) {
     try {
       const response = await this.axios.delete(url, {
@@ -190,14 +257,21 @@ export default class ApiClient {
     }
   }
 
+  /**
+   * Delete a resource by ID
+   *
+   * @param type
+   * @param id
+   * @param headers
+   */
   async remove(type: string, id: string | number, headers?: object) {
     const response = await this.delete(`${type}/${id}`, undefined, headers)
     return response
   }
 
-  /**
+  /******************************************************************
    * RELATIONSHIPS
-   */
+   *****************************************************************/
 
   /**
    * Creates a relationship between a parent resource
