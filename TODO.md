@@ -16,6 +16,5 @@ Add client function `removeAll`.
 ]
 ```
 
-- Improve source comments
 - Add usage docs
 - Add RSQL serializer
