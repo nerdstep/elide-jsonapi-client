@@ -1,6 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import resolve from 'rollup-plugin-node-resolve'
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot'
 import sourceMaps from 'rollup-plugin-sourcemaps'
 import typescript from 'rollup-plugin-typescript2'
 
@@ -11,11 +12,17 @@ export default {
   output: [
     {
       file: pkg.main,
-      name: 'elideJsonApiClient',
       format: 'umd',
+      globals: { axios: 'axios' },
+      name: 'elideJsonApiClient',
       sourcemap: true,
     },
-    { file: pkg.module, format: 'es', sourcemap: true },
+    {
+      file: pkg.module,
+      format: 'es',
+      globals: { axios: 'axios' },
+      sourcemap: true,
+    },
   ],
   // Modules that should not be included in the bundle (i.e. 'lodash')
   external: ['axios'],
@@ -35,5 +42,6 @@ export default {
     resolve(),
     // Resolve source maps to the original source
     sourceMaps(),
+    sizeSnapshot(),
   ],
 }

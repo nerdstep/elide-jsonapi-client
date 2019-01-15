@@ -1,0 +1,21 @@
+{
+  "dist/elide-jsonapi-client.umd.js": {
+    "bundled": 36346,
+    "minified": 9882,
+    "gzipped": 3287
+  },
+  "dist/elide-jsonapi-client.es5.js": {
+    "bundled": 32446,
+    "minified": 10996,
+    "gzipped": 3438,
+    "treeshaked": {
+      "rollup": {
+        "code": 14,
+        "import_statements": 14
+      },
+      "webpack": {
+        "code": 10597
+      }
+    }
+  }
+}
