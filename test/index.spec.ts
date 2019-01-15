@@ -1,4 +1,8 @@
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import ApiClient from '../src/index'
+
+const mock = new MockAdapter(axios)
 
 const api = new ApiClient({
   baseURL: 'http://localhost',
@@ -41,6 +45,7 @@ describe('ApiClient', () => {
       const dateObj = new Date()
       const dateStr = dateObj.toISOString()
       const timestamp = dateObj.valueOf()
+
       expect(api.serialize({ id: '1', type: 'foo', date: dateStr })).toEqual({
         data: {
           id: '1',
@@ -50,6 +55,35 @@ describe('ApiClient', () => {
           },
         },
       })
+    })
+  })
+
+  describe('update', () => {
+    it('should serialize the newDate property', async done => {
+      expect.assertions(1)
+
+      const newDate = new Date()
+
+      mock.onPatch('/articles').reply(config => {
+        const data = JSON.parse(config.data).data
+        expect(data.attributes.newDate).toEqual(newDate.valueOf())
+        return [200, { data }]
+      })
+
+      try {
+        await api.update(
+          'articles',
+          {
+            id: '1',
+            type: 'articles',
+            newDate: newDate.toISOString(),
+          },
+          { dateAttrs: ['newDate'] },
+        )
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
     })
   })
 })
