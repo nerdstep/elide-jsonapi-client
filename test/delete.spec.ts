@@ -30,7 +30,7 @@ describe('delete', () => {
     expect.assertions(1)
 
     mock.onDelete('/articles/1').reply(config => {
-      expect(config.url).toBe('articles/1')
+      expect(config.url).toBe('/articles/1')
       return [204]
     })
 
