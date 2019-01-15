@@ -67,6 +67,7 @@ api.remove('articles', 1)
 
 ```bash
 git clone https://github.com/nerdstep/elide-jsonapi-client.git
+cd elide-jsonapi-client
 yarn install
 ```
 
@@ -78,6 +79,10 @@ yarn install
 - `npm run test:prod`: Run linting and generate coverage
 - `npm run build`: Generate bundles and typings, create docs
 - `npm run lint`: Lints code
+
+## Changelog
+
+See [CHANGELOG](./CHANGELOG.md)
 
 ## To Do
 
