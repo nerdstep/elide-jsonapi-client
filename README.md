@@ -61,7 +61,7 @@ api.update('articles/1', {
 api.remove('articles', 1)
 ```
 
-### [Documentation](./wiki)
+### [Documentation](https://github.com/nerdstep/elide-jsonapi-client/wiki)
 
 ## Development
 
