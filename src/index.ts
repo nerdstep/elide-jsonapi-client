@@ -80,10 +80,10 @@ export default class ApiClient {
   /**
    * Merges provided options with the class instance options
    *
-   * @param {Object} options Serialization options
-   * @property {string[]} dateAttrs Date attributes to be serialized
-   * @property {bool} idRequired Is the resource ID required?
-   * @property {string[]} protectedAttrs Attributes to be stripped from payload
+   * @param {Object} [options] Serialization options
+   * @property {string[]} [dateAttrs] Date attributes to be serialized
+   * @property {bool} [idRequired] Is the resource ID required?
+   * @property {string[]} [protectedAttrs] Attributes to be stripped from payload
    */
   getOptions(
     {
@@ -120,7 +120,7 @@ export default class ApiClient {
    * Fetch an API resource
    *
    * @param {string} url Resource endpoint URL
-   * @param {Object} params Request parameters
+   * @param {Object} [params] Request parameters
    * @param {Object} [headers] Request headers
    */
   async get(url: string, params: Params = {}, headers?: object) {
