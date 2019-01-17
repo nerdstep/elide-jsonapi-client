@@ -66,8 +66,8 @@ export default class ApiClient {
   /**
    * Merges provided header properties with the class instance properties
    *
-   * @param headers
-   * @param jsonPatch
+   * @param {Object} [headers] Request headers
+   * @param {boolean} [jsonPatch] Is this a JSON Patch request?
    */
   getHeaders(headers?: object, jsonPatch?: boolean) {
     if (jsonPatch) {
@@ -80,10 +80,10 @@ export default class ApiClient {
   /**
    * Merges provided options with the class instance options
    *
-   * @param {Object} options
-   * @property {string[]} dateAttrs
-   * @property {bool} idRequired
-   * @property {string[]} protectedAttrs
+   * @param {Object} options Serialization options
+   * @property {string[]} dateAttrs Date attributes to be serialized
+   * @property {bool} idRequired Is the resource ID required?
+   * @property {string[]} protectedAttrs Attributes to be stripped from payload
    */
   getOptions(
     {
@@ -105,8 +105,8 @@ export default class ApiClient {
   /**
    * Serializes a normalized resource object into a JSON API structure
    *
-   * @param data
-   * @param options
+   * @param {Object} data Resource object
+   * @param {Object} [options] Serialization options
    */
   serialize(data: NormalizedResource, options?: SerializeOptions) {
     return serialize(data, this.getOptions(options))
@@ -119,9 +119,9 @@ export default class ApiClient {
   /**
    * Fetch an API resource
    *
-   * @param url
-   * @param params
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {Object} params Request parameters
+   * @param {Object} [headers] Request headers
    */
   async get(url: string, params: Params = {}, headers?: object) {
     try {
@@ -148,9 +148,9 @@ export default class ApiClient {
    *
    * Does not serialize the request data or deserialize the response
    *
-   * @param url
-   * @param data
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {Object} data Resource data object
+   * @param {Object} [headers] Request headers
    */
   async post(url: string, data: object, headers?: object) {
     try {
@@ -170,10 +170,10 @@ export default class ApiClient {
    *
    * Serializes the request data and deserializes the response
    *
-   * @param url
-   * @param data
-   * @param options
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {Object} data Normalized resource data object
+   * @param {Object} [options] Serialization options
+   * @param {Object} [headers] Request headers
    */
   async create(
     url: string,
@@ -199,10 +199,10 @@ export default class ApiClient {
    *
    * Does not serialize the request data or deserialize the response
    *
-   * @param url
-   * @param data
-   * @param headers
-   * @param jsonPatch
+   * @param {string} url Resource endpoint URL
+   * @param {Object} data Resource data object
+   * @param {Object} [headers] Request headers
+   * @param {boolean} [jsonPatch] Is this a JSON Patch request?
    */
   async patch(
     url: string,
@@ -227,10 +227,10 @@ export default class ApiClient {
    *
    * Serializes the request data and deserializes the response
    *
-   * @param url
-   * @param data
-   * @param options
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {Object} data Normalized resource data object
+   * @param {Object} [options] Serialization options
+   * @param {Object} [headers] Request headers
    */
   async update(
     url: string,
@@ -247,11 +247,11 @@ export default class ApiClient {
   /**
    * JSON Patch Extension mutation
    *
-   * @param url
-   * @param op
-   * @param path
-   * @param data
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {string} op Mutation operation type
+   * @param {string} path Resource path
+   * @param {Object[]} data Normalized resource data objects
+   * @param {Object} [headers] Request headers
    */
   async mutate(
     url: string,
@@ -279,9 +279,9 @@ export default class ApiClient {
    *
    * Can accept a resource object or collection of resources to delete
    *
-   * @param url
-   * @param data
-   * @param headers
+   * @param {string} url Resource endpoint URL
+   * @param {Object} [data] Resource data object
+   * @param {Object} [headers] Request headers
    */
   async delete(url: string, data?: object, headers?: object) {
     try {
@@ -299,9 +299,9 @@ export default class ApiClient {
   /**
    * Delete a resource by ID
    *
-   * @param type
-   * @param id
-   * @param headers
+   * @param {string} type Resource type
+   * @param {string} id Resource ID
+   * @param {Object} [headers] Request headers
    */
   async remove(type: string, id: string | number, headers?: object) {
     const response = await this.delete(`${type}/${id}`, undefined, headers)
@@ -316,11 +316,11 @@ export default class ApiClient {
    * Creates a relationship between a parent resource
    * and the provided resource(s)
    *
-   * @param type The parent resource Type
-   * @param id  The parent resource ID
-   * @param relationshipType The relationship resource Type
-   * @param data The related resource or collection of related resources
-   * @param headers Request headers
+   * @param {string} type Parent resource Type
+   * @param {string} id  Parent resource ID
+   * @param {string} relationshipType Relationship resource Type
+   * @param {Object|Object[]} data Related resource or collection of related resources
+   * @param {Object} [headers] Request headers
    */
   async createRelationship(
     type: string,
@@ -344,11 +344,11 @@ export default class ApiClient {
    * Removes a relationship between a parent resource
    * and the provided resource(s)
    *
-   * @param type The parent resource Type
-   * @param id  The parent resource ID
-   * @param relationshipType The relationship resource Type
-   * @param data The related resource or collection of related resources
-   * @param headers Request headers
+   * @param {string} type Parent resource Type
+   * @param {string} id  Parent resource ID
+   * @param {string} relationshipType Relationship resource Type
+   * @param {Object|Object[]} data Related resource or collection of related resources
+   * @param {Object} [headers] Request headers
    */
   /* istanbul ignore next // virtually the same as createRelationship */
   async removeRelationship(
