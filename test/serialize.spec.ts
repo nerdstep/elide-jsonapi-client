@@ -1,5 +1,6 @@
-import { serialize } from '../src/serialize';
-import { ID_REQUIRED, ID_TYPE_REQUIRED, TYPE_REQUIRED } from '../src/validation';
+import { serialize } from '../src/serialize'
+import { NormalizedResource } from '../src/typings'
+import { ID_REQUIRED, ID_TYPE_REQUIRED, TYPE_REQUIRED } from '../src/validation'
 
 const dateObj = new Date()
 const dateStr = dateObj.toISOString()
@@ -45,15 +46,15 @@ describe('serialize', () => {
   it('should throw if Type is missing', () => {
     expect.assertions(1)
     expect(() =>
-      // @ts-ignore
       serialize({
         id: '1',
-      }),
+      } as NormalizedResource),
     ).toThrow(TYPE_REQUIRED)
   })
 
   it('should throw if ID or Type is missing', () => {
     expect.assertions(2)
+
     expect(() =>
       serialize({
         id: '1',
@@ -61,6 +62,7 @@ describe('serialize', () => {
         author: { id: '9' },
       }),
     ).toThrow(ID_TYPE_REQUIRED)
+
     expect(() =>
       serialize({
         id: '1',

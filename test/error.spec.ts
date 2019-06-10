@@ -2,6 +2,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { error } from '../src/error'
 import ApiClient from '../src/index'
+import { ApiError } from '../src/typings'
 
 const mock = new MockAdapter(axios)
 const api = new ApiClient()
@@ -33,7 +34,7 @@ describe('error', () => {
     expect.assertions(1)
     const obj = getError({ message: ERROR_MSG })
     expect(() => {
-      error(obj)
+      error(obj as ApiError)
     }).toThrow(ERROR_MSG)
   })
 
@@ -43,7 +44,7 @@ describe('error', () => {
     // @ts-ignore
     obj.response.data.errors = ['Test']
     try {
-      error(obj)
+      error(obj as ApiError)
     } catch (e) {
       // @ts-ignore
       expect(e.errors).toEqual(obj.response.data.errors)
