@@ -36,10 +36,11 @@ export function serialize(
 
   // Map attributes and relationships
   Object.keys(obj).forEach(key => {
+    const isProtected = protectedAttrs.indexOf(key) > -1
     let value = obj[key] as NormalizedRelationship | NormalizedRelationship[]
 
     // Single relationship
-    if (isPlainObject(value)) {
+    if (isPlainObject(value) && !isProtected) {
       value = value as NormalizedRelationship
 
       validateRelationship(value)
@@ -55,7 +56,7 @@ export function serialize(
       } as Relationship
 
       // Multiple relationships
-    } else if (isArray(value)) {
+    } else if (isArray(value) && !isProtected) {
       value = value as NormalizedRelationship[]
 
       if (!data.relationships) data.relationships = {}
@@ -75,15 +76,14 @@ export function serialize(
       isDefined(value) &&
       key !== 'id' &&
       key !== 'type' &&
-      // Do not return protected attributes
-      protectedAttrs.indexOf(key) < 0
+      !isProtected
     ) {
       let attrValue = value as Attribute
 
       if (!data.attributes) data.attributes = {}
 
       // Convert date values into Unix epoch time for Elide
-      if (dateAttrs.indexOf(key) > -1) {
+      if (typeof value === 'string' && dateAttrs.indexOf(key) > -1) {
         attrValue = parseDate(value)
       }
 
