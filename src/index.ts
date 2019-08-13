@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosAdapter } from 'axios'
+import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions'
 import { deserialize } from './deserialize'
 import { deserializeMutation } from './deserializeMutation'
 import { error } from './error'
@@ -26,21 +27,25 @@ const JSON_API_PATCH_CONTENT_TYPE = 'application/vnd.api+json; ext=jsonpatch'
 export default class ApiClient {
   axios: AxiosInstance
   dateAttrs: string[]
-  headers: object
-  jsonPatchHeaders: object
+  headers: Object
+  jsonPatchHeaders: Object
   protectedAttrs: string[]
 
   constructor({
+    adapter = axios.defaults.adapter as AxiosAdapter,
     baseURL = '/',
     dateAttrs = [] as string[],
     headers = {},
     timeout = 20000, // 20s
-    pagignation = {
+    pagination = {
       size: 10,
       totals: true,
       type: 'offset',
     },
     protectedAttrs = [] as string[],
+    useCache = false,
+    useThrottle = false,
+    throttleThreshold = 1000,
   } = {}) {
     this.dateAttrs = dateAttrs
     this.protectedAttrs = protectedAttrs
@@ -55,11 +60,24 @@ export default class ApiClient {
       'Content-Type': JSON_API_PATCH_CONTENT_TYPE,
     })
 
+    if (useCache) {
+      adapter = cacheAdapterEnhancer(adapter, {
+        enabledByDefault: true,
+      })
+    }
+
+    if (useThrottle) {
+      adapter = throttleAdapterEnhancer(adapter, {
+        threshold: throttleThreshold,
+      })
+    }
+
     this.axios = axios.create({
+      adapter,
       baseURL,
-      paramsSerializer: /* istanbul ignore next */ (o: object) =>
-        serializeParams(o, pagignation),
       timeout,
+      paramsSerializer: /* istanbul ignore next */ (o: object) =>
+        serializeParams(o, pagination),
     })
   }
 
