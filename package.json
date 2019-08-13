@@ -74,13 +74,15 @@
     "testURL": "http://localhost"
   },
   "peerDependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.18.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios-extensions": "^3.0.6"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.17",
     "@types/node": "^12.7.1",
-    "axios": "^0.19.0",
+    "axios": "^0.18.1",
     "axios-mock-adapter": "^1.17.0",
     "coveralls": "^3.0.6",
     "env-cmd": "^9.0.3",
