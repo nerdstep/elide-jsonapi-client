@@ -28,6 +28,7 @@ There are already a number of client libraries for working with JSON API, howeve
 - Parameter serialization
   - Fields, filter, include, sort
   - [Pagination](http://elide.io/pages/guide/10-jsonapi.html#pagination): `size` & `number` OR `offset` & `limit`
+- Request caching and throttling
 
 ## [API Docs](https://nerdstep.github.io/elide-jsonapi-client)
 
@@ -62,6 +63,13 @@ api.remove('articles', 1)
 ```
 
 ### [Documentation](https://github.com/nerdstep/elide-jsonapi-client/wiki)
+
+## Known Issues
+
+Request caching is not working with axios v0.19.0 due to a custom config bug.
+
+- https://github.com/axios/axios/pull/2207
+- https://github.com/kuitos/axios-extensions/issues/54
 
 ## Development
 
