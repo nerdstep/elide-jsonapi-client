@@ -41,7 +41,7 @@ function filterIncluded(
 ) {
   const filtered = included.filter(item => item.id === id && item.type === type)
   const obj = filtered[0] || { id, type }
-  return normalizeResource(obj)
+  return normalizeResource(obj, included)
 }
 
 /**

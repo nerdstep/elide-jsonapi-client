@@ -32,6 +32,34 @@
   ],
   "included": [
     {
+      "type": "contact",
+      "id": "8",
+      "attributes": {
+        "phone": "111-222-3333",
+        "email": "s.creasey@example.com"
+      },
+      "links": {
+        "self": "http://example.com/contacts/8"
+      }
+    },
+    {
+      "type": "people",
+      "id": "2",
+      "attributes": {
+        "firstname": "Sally",
+        "lastname": "Creasey",
+        "twitter": "creaseS"
+      },
+      "relationships": {
+        "office": {
+          "data": {"type": "contact", "id": "8"}
+        }
+      },
+      "links": {
+        "self": "http://example.com/people/2"
+      }
+    },
+    {
       "type": "people",
       "id": "9",
       "attributes": {
