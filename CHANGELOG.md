@@ -1,3 +1,11 @@
+<a name="1.0.0"></a>
+
+## 1.0.0 (2019-12-16)
+
+#### Features
+
+- populate included relationships ([c3803b62](https://github.com/nerdstep/elide-jsonapi-client.git/commit/c3803b62))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
