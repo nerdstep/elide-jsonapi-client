@@ -19,21 +19,21 @@
     }
   },
   "dist\\elide-jsonapi-client.umd.js": {
-    "bundled": 103183,
-    "minified": 33474,
-    "gzipped": 10475
+    "bundled": 79392,
+    "minified": 25100,
+    "gzipped": 7747
   },
   "dist\\elide-jsonapi-client.es.js": {
-    "bundled": 91291,
-    "minified": 37454,
-    "gzipped": 11113,
+    "bundled": 70059,
+    "minified": 28525,
+    "gzipped": 8233,
     "treeshaked": {
       "rollup": {
-        "code": 19000,
-        "import_statements": 14
+        "code": 10587,
+        "import_statements": 34
       },
       "webpack": {
-        "code": 34301
+        "code": 25950
       }
     }
   }
