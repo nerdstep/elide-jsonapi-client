@@ -4,7 +4,7 @@
 
 #### Features
 
-- populate included relationships (c3803b62(https://github.com/nerdstep/elide-jsonapi-client.git/commit/c3803b62))
+- populate included relationships ([c3803b62](https://github.com/nerdstep/elide-jsonapi-client.git/commit/c3803b62))
 
 ## 0.9.0 (2019-08-13)
 
