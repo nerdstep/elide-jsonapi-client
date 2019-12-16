@@ -71,23 +71,6 @@ Request caching is not working with axios v0.19.0 due to a custom config bug.
 - https://github.com/axios/axios/pull/2207
 - https://github.com/kuitos/axios-extensions/issues/54
 
-## Development
-
-```bash
-git clone https://github.com/nerdstep/elide-jsonapi-client.git
-cd elide-jsonapi-client
-yarn install
-```
-
-### Scripts
-
-- `npm t`: Run test suite
-- `npm start`: Run `npm run build` in watch mode
-- `npm run test:watch`: Run test suite in [interactive watch mode](http://facebook.github.io/jest/docs/cli.html#watch)
-- `npm run test:prod`: Run linting and generate coverage
-- `npm run build`: Generate bundles and typings, create docs
-- `npm run lint`: Lints code
-
 ## Changelog
 
 See [CHANGELOG](./CHANGELOG.md)
@@ -108,4 +91,4 @@ Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu)
 
 ## License
 
-MIT © [Justin M. Williams](https://github.com/nerdstep)
+[MIT](./LICENSE)
