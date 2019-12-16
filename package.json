@@ -1,6 +1,6 @@
 {
   "name": "elide-jsonapi-client",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "JSON-API client for Elide based APIs",
   "keywords": [
     "json",
