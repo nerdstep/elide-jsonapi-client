@@ -33,16 +33,26 @@
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.js && typedoc --out docs --target es6 --theme minimal --mode file src",
     "start": "rollup -c rollup.config.js -w",
-    "test": "jest",
+    "test": "npm run lint && npm run test -- --coverage --no-cache",
+    "test:dev": "jest",
     "test:watch": "jest --watch",
-    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "deploy-docs:local": "env-cmd ./.env.local ts-node tools/gh-pages-publish",
     "report-coverage": "minicat coverage/lcov.info | coveralls",
-    "precommit": "lint-staged"
+    "commit": "npx git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-    "{src,test}/**/*.ts": [
+    "*.{md,js,json,ts}": [
       "prettier --write",
       "git add"
     ]
@@ -85,7 +95,9 @@
     "axios": "^0.18.1",
     "axios-mock-adapter": "^1.17.0",
     "coveralls": "^3.0.9",
+    "cz-conventional-changelog": "3.0.2",
     "env-cmd": "^10.0.1",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "lint-staged": "^9.5.0",
     "minicat": "^1.0.0",
