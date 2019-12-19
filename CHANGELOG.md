@@ -2,9 +2,9 @@
 
 ### 1.0.2 (2019-12-19)
 
-#### Bug Fixes
+#### Summary
 
-- **normalize.ts:** avoid circular relationships in included ([d991daf4](https://github.com/nerdstep/elide-jsonapi-client.git/commit/d991daf4))
+- bump version to re-publish to npm; this time with the `dist` files!
 
 <a name="1.0.1"></a>
 
