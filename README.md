@@ -7,9 +7,7 @@
 [![maintainability](https://flat.badgen.net/codeclimate/maintainability/nerdstep/elide-jsonapi-client)](https://codeclimate.com/github/nerdstep/elide-jsonapi-client)
 [![build status](https://flat.badgen.net/travis/nerdstep/elide-jsonapi-client)](https://travis-ci.org/nerdstep/elide-jsonapi-client)
 [![styled with prettier](https://flat.badgen.net/badge/styled%20with/prettier/pink)](https://github.com/prettier/prettier)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![license](https://flat.badgen.net/github/license/nerdstep/elide-jsonapi-client)](./LICENSE)
 
 > An opinionated [{json:api}](http://jsonapi.org) client for [Elide](http://elide.io) based APIs
