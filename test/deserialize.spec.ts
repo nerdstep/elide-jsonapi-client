@@ -9,7 +9,10 @@ const responseResource = {
   type: 'articles',
   title: 'JSON API paints my bikeshed!',
   author: { type: 'people', id: '9' },
-  comments: [{ type: 'comments', id: '5' }, { type: 'comments', id: '12' }],
+  comments: [
+    { type: 'comments', id: '5' },
+    { type: 'comments', id: '12' },
+  ],
 }
 
 describe('deserialize', () => {
@@ -48,31 +51,72 @@ describe('deserialize', () => {
               type: 'comments',
               id: '5',
               body: 'First!',
-              author: { 
-                type: 'people', 
+              author: {
+                type: 'people',
                 id: '2',
+                contactInfo: {
+                  email: 's.creasey@example.com',
+                  id: '8',
+                  person: {
+                    id: '2',
+                    type: 'people',
+                  },
+                  phone: '111-222-3333',
+                  type: 'contacts',
+                },
                 firstname: 'Sally',
                 lastname: 'Creasey',
-                office: {
-                  type: 'contact',
-                  id: '8',
-                  email: 's.creasey@example.com',
-                  phone: '111-222-3333',
-                },
                 twitter: 'creaseS',
               },
             },
             {
-              type: 'comments',
-              id: '12',
-              body: 'I like XML better',
-              author: { 
-                type: 'people', 
+              author: {
+                type: 'people',
                 id: '9',
                 firstname: 'Dan',
                 lastname: 'Gebhardt',
                 twitter: 'dgeb',
               },
+              body: 'I like XML better',
+              id: '12',
+              reactions: [
+                {
+                  author: {
+                    firstname: 'Sally',
+                    contactInfo: {
+                      email: 's.creasey@example.com',
+                      id: '8',
+                      person: {
+                        id: '2',
+                        type: 'people',
+                      },
+                      phone: '111-222-3333',
+                      type: 'contacts',
+                    },
+                    id: '2',
+                    lastname: 'Creasey',
+                    twitter: 'creaseS',
+                    type: 'people',
+                  },
+                  comment: { id: '12', type: 'comments' },
+                  icon: 'thumbs-up',
+                  id: '1',
+                  reactionType: 'like',
+                  type: 'reactions',
+                },
+                {
+                  author: {
+                    id: '3',
+                    type: 'people',
+                  },
+                  comment: { id: '12', type: 'comments' },
+                  icon: 'thumbs-down',
+                  id: '2',
+                  reactionType: 'dislike',
+                  type: 'reactions',
+                },
+              ],
+              type: 'comments',
             },
           ],
         },
