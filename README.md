@@ -72,17 +72,7 @@ Request caching is not working with axios v0.19.0 due to a custom config bug.
 - https://github.com/axios/axios/pull/2207
 - https://github.com/kuitos/axios-extensions/issues/54
 
-## Changelog
-
-See [CHANGELOG](./CHANGELOG.md)
-
-## To Do
-
-See [TODO](./TODO.md)
-
 ## Credits
-
-Bootstrapped with [TypeScript library starter](https://github.com/alexjoverm/typescript-library-starter)
 
 Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu)
 
