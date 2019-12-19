@@ -31,8 +31,6 @@ There are already a number of client libraries for working with JSON API, howeve
   - [Pagination](http://elide.io/pages/guide/10-jsonapi.html#pagination): `size` & `number` OR `offset` & `limit`
 - Request caching and throttling
 
-## [API Docs](https://nerdstep.github.io/elide-jsonapi-client)
-
 ## Basic Usage
 
 ```js
@@ -63,7 +61,11 @@ api.update('articles/1', {
 api.remove('articles', 1)
 ```
 
-### [Documentation](https://github.com/nerdstep/elide-jsonapi-client/wiki)
+## Documentation
+
+### [API Docs](https://nerdstep.github.io/elide-jsonapi-client)
+
+### [Wiki](https://github.com/nerdstep/elide-jsonapi-client/wiki)
 
 ## Known Issues
 
