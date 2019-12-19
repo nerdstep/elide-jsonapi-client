@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "white3km",
+      "name": "Ken White",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/58864197?v=4",
+      "profile": "https://github.com/white3km",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "elide-jsonapi-client",
+  "projectOwner": "nerdstep",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
