@@ -39,9 +39,15 @@ function filterIncluded(
   included: ResourceObject[],
   { id, type }: RelationshipRef,
 ) {
-  const filtered = included.filter(item => item.id === id && item.type === type)
-  const obj = filtered[0] || { id, type }
-  return normalizeResource(obj, included)
+  const includedResource = included.find(
+    item => item.id === id && item.type === type,
+  )
+  const obj = includedResource || { id, type }
+  // To avoid circular relationships
+  const filteredIncludes = included.filter(
+    item => item.id !== id && item.type !== type,
+  )
+  return normalizeResource(obj, filteredIncludes)
 }
 
 /**

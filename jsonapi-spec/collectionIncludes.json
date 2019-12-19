@@ -32,11 +32,16 @@
   ],
   "included": [
     {
-      "type": "contact",
+      "type": "contacts",
       "id": "8",
       "attributes": {
         "phone": "111-222-3333",
         "email": "s.creasey@example.com"
+      },
+      "relationships": {
+        "person": {
+          "data": { "type": "people", "id": "2" }
+        }
       },
       "links": {
         "self": "http://example.com/contacts/8"
@@ -51,8 +56,8 @@
         "twitter": "creaseS"
       },
       "relationships": {
-        "office": {
-          "data": {"type": "contact", "id": "8"}
+        "contactInfo": {
+          "data": { "type": "contacts", "id": "8" }
         }
       },
       "links": {
@@ -95,10 +100,54 @@
       "relationships": {
         "author": {
           "data": { "type": "people", "id": "9" }
+        },
+        "reactions": {
+          "data": [
+            { "type": "reactions", "id": "1" },
+            { "type": "reactions", "id": "2" }
+          ]
         }
       },
       "links": {
         "self": "http://example.com/comments/12"
+      }
+    },
+    {
+      "type": "reactions",
+      "id": "1",
+      "attributes": {
+        "reactionType": "like",
+        "icon": "thumbs-up"
+      },
+      "relationships": {
+        "author": {
+          "data": { "type": "people", "id": "2" }
+        },
+        "comment": {
+          "data": { "type": "comments", "id": "12" }
+        }
+      },
+      "links": {
+        "self": "http://example.com/reactions/1"
+      }
+    },
+    {
+      "type": "reactions",
+      "id": "2",
+      "attributes": {
+        "reactionType": "dislike",
+        "icon": "thumbs-down"
+      },
+      "relationships": {
+        "author": {
+          "data": { "type": "people", "id": "3" }
+        },
+        "comment": {
+          "data": { "type": "comments", "id": "12" }
+        }
+      },
+      "links": {
+        "self": "http://example.com/reactions/5"
       }
     }
   ]
