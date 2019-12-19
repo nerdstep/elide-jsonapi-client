@@ -1,7 +1,4 @@
 # Elide JSON API Client
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![npm](https://flat.badgen.net/npm/v/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
 [![npm](https://flat.badgen.net/npm/dt/elide-jsonapi-client)](https://www.npmjs.com/package/elide-jsonapi-client)
@@ -10,6 +7,9 @@
 [![maintainability](https://flat.badgen.net/codeclimate/maintainability/nerdstep/elide-jsonapi-client)](https://codeclimate.com/github/nerdstep/elide-jsonapi-client)
 [![build status](https://flat.badgen.net/travis/nerdstep/elide-jsonapi-client)](https://travis-ci.org/nerdstep/elide-jsonapi-client)
 [![styled with prettier](https://flat.badgen.net/badge/styled%20with/prettier/pink)](https://github.com/prettier/prettier)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![license](https://flat.badgen.net/github/license/nerdstep/elide-jsonapi-client)](./LICENSE)
 
 > An opinionated [{json:api}](http://jsonapi.org) client for [Elide](http://elide.io) based APIs
@@ -82,19 +82,11 @@ See [CHANGELOG](./CHANGELOG.md)
 
 See [TODO](./TODO.md)
 
-## Contributing
-
-See [CONTRIBUTING](./CONTRIBUTING.md)
-
 ## Credits
 
 Bootstrapped with [TypeScript library starter](https://github.com/alexjoverm/typescript-library-starter)
 
 Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu)
-
-## License
-
-[MIT](./LICENSE)
 
 ## Contributors ✨
 
@@ -113,4 +105,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome! See [CONTRIBUTING](./CONTRIBUTING.md) guidelines.
+
+## License
+
+[MIT](./LICENSE)
