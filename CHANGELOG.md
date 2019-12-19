@@ -1,11 +1,18 @@
-<a name="1.0.1"></a>
-### 1.0.1 (2019-12-19)
+<a name="1.0.2"></a>
 
+### 1.0.2 (2019-12-19)
 
 #### Bug Fixes
 
-* **normalize.ts:** avoid circular relationships in included ([d991daf4](https://github.com/nerdstep/elide-jsonapi-client.git/commit/d991daf4))
+- **normalize.ts:** avoid circular relationships in included ([d991daf4](https://github.com/nerdstep/elide-jsonapi-client.git/commit/d991daf4))
 
+<a name="1.0.1"></a>
+
+### 1.0.1 (2019-12-19)
+
+#### Bug Fixes
+
+- **normalize.ts:** avoid circular relationships in included ([d991daf4](https://github.com/nerdstep/elide-jsonapi-client.git/commit/d991daf4))
 
 <a name="1.0.0"></a>
 
