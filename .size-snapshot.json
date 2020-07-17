@@ -36,5 +36,24 @@
         "code": 25994
       }
     }
+  },
+  "elide-jsonapi-client.umd.js": {
+    "bundled": 76058,
+    "minified": 24073,
+    "gzipped": 7715
+  },
+  "elide-jsonapi-client.es.js": {
+    "bundled": 67381,
+    "minified": 27039,
+    "gzipped": 8207,
+    "treeshaked": {
+      "rollup": {
+        "code": 4708,
+        "import_statements": 14
+      },
+      "webpack": {
+        "code": 23923
+      }
+    }
   }
 }
