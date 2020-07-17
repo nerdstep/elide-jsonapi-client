@@ -54,8 +54,7 @@
   },
   "lint-staged": {
     "*.{md,js,json,ts}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "jest": {
