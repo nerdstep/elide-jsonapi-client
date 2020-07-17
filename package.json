@@ -39,7 +39,8 @@
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "deploy-docs:local": "env-cmd ./.env.local ts-node tools/gh-pages-publish",
     "report-coverage": "minicat coverage/lcov.info | coveralls",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "changelog": "conventional-changelog -i CHANGELOG.md -s"
   },
   "config": {
     "commitizen": {
