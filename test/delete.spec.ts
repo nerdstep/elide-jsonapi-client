@@ -10,10 +10,10 @@ afterEach(() => {
 })
 
 describe('delete', () => {
-  it('should set header', async done => {
+  it('should set header', async (done) => {
     expect.assertions(1)
 
-    mock.onDelete('/articles/1').reply(config => {
+    mock.onDelete('/articles/1').reply((config) => {
       expect(config.headers.foo).toBe(true)
       return [204]
     })
@@ -26,11 +26,11 @@ describe('delete', () => {
     }
   })
 
-  it('should have the correct URL', async done => {
+  it('should have the correct URL', async (done) => {
     expect.assertions(1)
 
-    mock.onDelete('/articles/1').reply(config => {
-      expect(config.url).toBe('/articles/1')
+    mock.onDelete('/articles/1').reply((config) => {
+      expect(config.url).toBe('articles/1')
       return [204]
     })
 
@@ -42,7 +42,7 @@ describe('delete', () => {
     }
   })
 
-  it('should fail with network error', async done => {
+  it('should fail with network error', async (done) => {
     expect.assertions(1)
     mock.onDelete('/articles/1').networkError()
 
