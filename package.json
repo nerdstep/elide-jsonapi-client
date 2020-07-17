@@ -1,7 +1,8 @@
 {
   "name": "elide-jsonapi-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "JSON-API client for Elide based APIs",
+  "license": "MIT",
   "keywords": [
     "json",
     "api",
@@ -24,9 +25,8 @@
     "type": "git",
     "url": "https://github.com/nerdstep/elide-jsonapi-client.git"
   },
-  "license": "MIT",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=10.0.0"
   },
   "scripts": {
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
@@ -84,38 +84,38 @@
     "testURL": "http://localhost"
   },
   "peerDependencies": {
-    "axios": "^0.18.1"
+    "axios": "^0.19.2"
   },
   "dependencies": {
-    "axios-extensions": "^3.0.6"
+    "axios-extensions": "^3.1.3"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.14",
-    "axios": "^0.18.1",
-    "axios-mock-adapter": "^1.17.0",
-    "coveralls": "^3.0.9",
-    "cz-conventional-changelog": "3.0.2",
-    "env-cmd": "^10.0.1",
-    "husky": "^3.1.0",
-    "jest": "^24.9.0",
-    "lint-staged": "^9.5.0",
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.23",
+    "axios": "^0.19.2",
+    "axios-mock-adapter": "^1.18.1",
+    "coveralls": "^3.1.0",
+    "cz-conventional-changelog": "3.2.0",
+    "env-cmd": "^10.1.0",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "lint-staged": "^10.2.11",
     "minicat": "^1.0.0",
-    "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.27.8",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.21.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-size-snapshot": "^0.10.0",
-    "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.25.2",
-    "ts-jest": "^24.2.0",
-    "ts-node": "^8.5.4",
-    "tslint": "^5.20.1",
+    "rollup-plugin-size-snapshot": "^0.12.0",
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "ts-jest": "^26.1.3",
+    "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^9.0.0",
-    "typedoc": "^0.15.3",
-    "typescript": "^3.7.2"
+    "typedoc": "^0.17.8",
+    "typescript": "^3.9.7"
   }
 }
