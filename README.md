@@ -67,13 +67,6 @@ api.remove('articles', 1)
 
 ### [Wiki](https://github.com/nerdstep/elide-jsonapi-client/wiki)
 
-## Known Issues
-
-Request caching is not working with axios v0.19.0 due to a custom config bug.
-
-- https://github.com/axios/axios/pull/2207
-- https://github.com/kuitos/axios-extensions/issues/54
-
 ## Credits
 
 Inspired by [Kitsu](https://github.com/wopian/kitsu/tree/master/packages/kitsu)
@@ -93,6 +86,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome! See [CONTRIBUTING](./CONTRIBUTING.md) guidelines.
